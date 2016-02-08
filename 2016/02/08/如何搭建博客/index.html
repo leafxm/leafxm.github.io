@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Leaf&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一步步教你用GitHub Pages与Hexo搭建静态博客简介 记录windows环境下一步步搭建博客的过程~因为自己在搭博客过程中遇到一些小问题，所以提醒别人不要踩坑（内心os：喂，你以为人人都和你一样二吗），同时也是对这个过程的一个回顾与思考，作为第一篇博文再合适不过。力求条理清楚，内容主要分为GitHub设置、Hexo设置、利用Hexo上传文件到GitHub和域名绑定这四部分。
+软件安装Gi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Leaf's blog">
+<meta property="og:url" content="http://yoursite.com/2016/02/08/如何搭建博客/index.html">
+<meta property="og:site_name" content="Leaf's blog">
+<meta property="og:description" content="一步步教你用GitHub Pages与Hexo搭建静态博客简介 记录windows环境下一步步搭建博客的过程~因为自己在搭博客过程中遇到一些小问题，所以提醒别人不要踩坑（内心os：喂，你以为人人都和你一样二吗），同时也是对这个过程的一个回顾与思考，作为第一篇博文再合适不过。力求条理清楚，内容主要分为GitHub设置、Hexo设置、利用Hexo上传文件到GitHub和域名绑定这四部分。
+软件安装Gi">
+<meta property="og:image" content="https://xuanwo.org/imgs/opinion/Git-path-setting.png">
+<meta property="og:image" content="http://7xqrzp.com1.z0.glb.clouddn.com/gitNew.png">
+<meta property="og:image" content="http://7xqrzp.com1.z0.glb.clouddn.com/gitSetting.png">
+<meta property="og:image" content="http://7xqrzp.com1.z0.glb.clouddn.com/hexov.png">
+<meta property="og:image" content="http://7xqrzp.com1.z0.glb.clouddn.com/sshchoose.png">
+<meta property="og:image" content="http://7xqrzp.com1.z0.glb.clouddn.com/leaxm%2Fdnspod.png">
+<meta property="og:image" content="http://7xqrzp.com1.z0.glb.clouddn.com/leaxm%2Fdnssever.png">
+<meta property="og:image" content="http://7xqrzp.com1.z0.glb.clouddn.com/shiyi.PNG">
+<meta property="og:updated_time" content="2016-02-08T08:14:43.981Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Leaf's blog">
+<meta name="twitter:description" content="一步步教你用GitHub Pages与Hexo搭建静态博客简介 记录windows环境下一步步搭建博客的过程~因为自己在搭博客过程中遇到一些小问题，所以提醒别人不要踩坑（内心os：喂，你以为人人都和你一样二吗），同时也是对这个过程的一个回顾与思考，作为第一篇博文再合适不过。力求条理清楚，内容主要分为GitHub设置、Hexo设置、利用Hexo上传文件到GitHub和域名绑定这四部分。
+软件安装Gi">
+  
+    <link rel="alternative" href="/atom.xml" title="Leaf&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Leaf&#39;s blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-如何搭建博客" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/02/08/如何搭建博客/" class="article-date">
+  <time datetime="2016-02-08T08:14:43.981Z" itemprop="datePublished">2016-02-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="u4E00_u6B65_u6B65_u6559_u4F60_u7528GitHub_Pages_u4E0EHexo_u642D_u5EFA_u9759_u6001_u535A_u5BA2"><a href="#u4E00_u6B65_u6B65_u6559_u4F60_u7528GitHub_Pages_u4E0EHexo_u642D_u5EFA_u9759_u6001_u535A_u5BA2" class="headerlink" title="一步步教你用GitHub Pages与Hexo搭建静态博客"></a>一步步教你用GitHub Pages与Hexo搭建静态博客</h1><p><strong>简介</strong> 记录windows环境下一步步搭建博客的过程~因为自己在搭博客过程中遇到一些小问题，所以提醒别人不要踩坑（内心os：喂，你以为人人都和你一样二吗），同时也是对这个过程的一个回顾与思考，作为第一篇博文再合适不过。力求条理清楚，内容主要分为GitHub设置、Hexo设置、利用Hexo上传文件到GitHub和域名绑定这四部分。</p>
+<h2 id="u8F6F_u4EF6_u5B89_u88C5"><a href="#u8F6F_u4EF6_u5B89_u88C5" class="headerlink" title="软件安装"></a>软件安装</h2><h3 id="Git__u4E0B_u8F7D_u5B89_u88C5"><a href="#Git__u4E0B_u8F7D_u5B89_u88C5" class="headerlink" title="Git 下载安装"></a>Git 下载安装</h3><p>首先，下载 <a href="http://git-scm.com/" target="_blank" rel="external">Git</a>.<br>安装大部分选择默认，出于操作方便考虑，PATH选择如图：</p>
+<p><img src="https://xuanwo.org/imgs/opinion/Git-path-setting.png" alt="" title="PATH选择"></p>
+<p>原因如下：</p>
+<blockquote>
+<p>Git的默认设置下，出于安全考虑，只有在Git Bash中才能进行Git的相关操作。按照上图进行的选择，将会使得Git安装程序在系统PATH中加入Git的相关路径，使得你可以在CMD界面下调用Git，不用打开Git Bash了。</p>
+</blockquote>
+<p>接下来，检查Git安装正确没有，打开cmd，输入</p>
+<pre><code>git --version`
+</code></pre><p>如果结果显示的是<code>git version 2.7.0.windows.1</code>(具体版本和下载的一致)则安装成功。<br>打开Git可以通过两种方式：</p>
+<ul>
+<li>在开始菜单-所有程序-Git文件夹找到 “Git Bash”，点击打开；</li>
+<li>在相应文件夹鼠标右键点击，可以点击<br>“Git Bash Here” 选项来打开。</li>
+</ul>
+<h3 id="node-js__u4E0B_u8F7D_u5B89_u88C5"><a href="#node-js__u4E0B_u8F7D_u5B89_u88C5" class="headerlink" title="node.js 下载安装"></a>node.js 下载安装</h3><p>下载 <a href="https://nodejs.org/en/" target="_blank" rel="external">node.js</a>，一路默认设置安装上就好了。然后检查是否安装正确，打开cmd，输入</p>
+<pre><code>node -v 
+npm -v
+</code></pre><p>如果正确显示版本号则安装正确。</p>
+<h2 id="GitHub_u8BBE_u7F6E"><a href="#GitHub_u8BBE_u7F6E" class="headerlink" title="GitHub设置"></a>GitHub设置</h2><h3 id="GitHub__u8D26_u53F7_u6CE8_u518C"><a href="#GitHub__u8D26_u53F7_u6CE8_u518C" class="headerlink" title="GitHub 账号注册"></a>GitHub 账号注册</h3><p>首先是注册GitHub账号。如果你已经有了一个GitHub账号，那么可以愉快跳过这小段啦。打开<a href="http://www.github.com/" target="_blank" rel="external">Github首页</a>，输入用户名、email和密码。</p>
+<p><strong>tips</strong> ：开始博主是用126邮箱无论如何收不到验证邮件，后来换qq邮箱就秒收到啦。邮件验证很重要，关系到创建项目。所以一定要验证哦！换邮箱还给博主带来了意想不到的麻烦，下面你就会看到博主的辛酸经历了~</p>
+<h3 id="GitHub__u8D26_u53F7_u8BBE_u7F6E"><a href="#GitHub__u8D26_u53F7_u8BBE_u7F6E" class="headerlink" title="GitHub 账号设置"></a>GitHub 账号设置</h3><p>接下来登录账号，点击页面右上角的”+”号，选择”New repository”。如图所示：</p>
+<p><img src="http://7xqrzp.com1.z0.glb.clouddn.com/gitNew.png" alt=""></p>
+<p>进入创建页面，在Repository name 中填写”yourname.github.io”, Description 写一些介绍，也可以空着。</p>
+<p>接下来需要开启gh-pages功能。</p>
+<p><img src="http://7xqrzp.com1.z0.glb.clouddn.com/gitSetting.png" alt=""></p>
+<p>如上图选择settings，在页面找到GitHub Pages，点击Automatic page generator，Github会自动创建出一个gh-pages的页面。如果配置没有问题，稍等片刻yourname.github.io这个网址就可以正常访问了，也意味着<br>GitHub设置部分结束啦。</p>
+<h2 id="Hexo_u8BBE_u7F6E"><a href="#Hexo_u8BBE_u7F6E" class="headerlink" title="Hexo设置"></a>Hexo设置</h2><h3 id="Hexo__u5B89_u88C5_u548C_u521D_u59CB_u5316"><a href="#Hexo__u5B89_u88C5_u548C_u521D_u59CB_u5316" class="headerlink" title="Hexo 安装和初始化"></a>Hexo 安装和初始化</h3><p>接下来，安装Hexo。选择一个地方创建一个文件夹(下面以文件夹名“hexo文件夹”指代该文件夹)，在hexo文件夹空白处按Shift+鼠标右键，点击“在此处打开命令行窗口”（在该文件夹打开命令行的方式）。命令行中输入</p>
+<pre><code>npm install hexo-cli -g
+npm install hexo --save
+</code></pre><p>接下来我们看一下Hexo安装好了没有，命令行输入</p>
+<pre><code>hexo -v
+</code></pre><p>若看到如下内容则安装成功：</p>
+<p><img src="http://7xqrzp.com1.z0.glb.clouddn.com/hexov.png" alt=""></p>
+<p>Hexo初始化，在命令行输入<code>hexo init</code>，然后输入<code>npm install</code>，npm会自动安装啦~</p>
+<h3 id="u672C_u5730_u9884_u89C8_u535A_u5BA2"><a href="#u672C_u5730_u9884_u89C8_u535A_u5BA2" class="headerlink" title="本地预览博客"></a>本地预览博客</h3><p> 输入<code>hexo g</code>和<code>hexo s</code>即可在<a href="http://localhost:4000/" target="_blank" rel="external">http://localhost:4000/</a>预览博客啦。按 Ctrl+C 之后，预览效果就会消失~所以每次预览前都要用那两个命令哦~<br>至此，简单的Hexo设置部分就结束啦。接下来，就是如何将Hexo本地内容上传到GitHub上。</p>
+<h2 id="u5229_u7528Hexo_u4E0A_u4F20_u6587_u4EF6_u5230GitHub"><a href="#u5229_u7528Hexo_u4E0A_u4F20_u6587_u4EF6_u5230GitHub" class="headerlink" title="利用Hexo上传文件到GitHub"></a>利用Hexo上传文件到GitHub</h2><h3 id="u914D_u7F6ESSH_keys"><a href="#u914D_u7F6ESSH_keys" class="headerlink" title="配置SSH keys"></a>配置SSH keys</h3><p>为了让本地文件和远程的GitHub联系，可以使用SSH keys。</p>
+<p>首先，生成新的SSH key。在hexo文件夹处，点击鼠标右键，选择“Git Bash Here”，在git bash窗口输入<br>    $ ssh-keygen -t rsa -C “mailname@mail.com”<br>“mailname@mail.com”是你的邮箱地址，出现一段文字，按回车，然后会提示输入密码，这个密码是提交项目时使用的，主要是为了防止别人往你的项目里提交内容（不会显示*号的，继续写就好），也可以空着就表示没有密码。（不要忘记这个密码哦，以后每次往上传文件到GitHub都要输入的~）如果看到”The key’s randomart image is”一个奇奇怪怪的图形，那么这一步就成功啦！上面会有说”Your public key have been saved in…”,记住这个地址哦。</p>
+<p>打开上面那个地址，打开 id_rsa.pub 文件，复制内容。登录GitHub，在项目页进入settings（第一部分有截图标注位置），选择最后一个”Deploy keys”,然后在右边找到”Add deploy key”点击,标题随便写，内容粘贴刚刚复制的id_rsa.pub文件里的内容（要准确才行），可写性选择的选项一定要打勾啊（忘记打勾而浪费不少时间的博主哭着提醒）！Add key 就ok啦。</p>
+<p>接下来测试是否成功，在git bash 输入<br>    $ ssh -T git@github.com<br>“git@github.com”不用修改，如果让你输入yes/no,输入yes就好，然后就会看到” You’ve successfully authenticated, but GitHub does not provide shell access.”这句表示成功的话了~</p>
+<p>现在已经可以通过SSH链接到GitHub了，但是还要完善你的个人信息才可以。命令如下：</p>
+<pre><code>$ git config --global user.name &quot;yourname&quot;//用户名
+$ git config --global user.email &quot;yourname@mail.com&quot;//填写自己的邮箱
+</code></pre><p>这样这步就完成啦。</p>
+<p>我之前按照的教程是最开始设置SSH key，所以是在126邮箱下，结果后来收不到验证邮件换了邮箱，，而SSH key就没有了我却不知道，导致花费了很多时间无法用hexo推送到github……（角落画圈圈中，直到写到这里才知道自己当初浪费那么多时间纠结那么久的原因）</p>
+<h3 id="Hexo__u914D_u7F6EDeployment"><a href="#Hexo__u914D_u7F6EDeployment" class="headerlink" title="Hexo 配置Deployment"></a>Hexo 配置Deployment</h3><p>打开hexo文件夹，找到_config.yml文件，打开这个文件，拉到最后，找到Deployment，然后按照如下修改：</p>
+<pre><code>deploy:
+  type: git
+  repo: git@github.com:yourname/yourname.github.io.    
+  branch: master
+</code></pre><p>这里的repo格式要和GitHub中的设置对应，打开你的项目页面，如下图选择SSH：</p>
+<p><img src="http://7xqrzp.com1.z0.glb.clouddn.com/sshchoose.png" alt=""></p>
+<p>复制窗口里”git@github.com:…”到 repo。</p>
+<p>在hexo文件夹右键打开git bash，输入</p>
+<pre><code>$ hexo g
+$ hexo d
+</code></pre><p>或者两个命令的合并</p>
+<pre><code>$ hexo d -g
+</code></pre><p>现在你就可以打开你的git项目看文件是否改变了，打开你的页面yourname.github.io,看看你的页面是不是和hexo本地预览的效果一样了呢~如果是的，恭喜你成功啦~如果文件没有更新，你试着用以下命令：</p>
+<pre><code>$ hexo clean
+$ hexo d -g
+</code></pre><p>(我也不知道是因为等待时间不够问题还是别的原因，开始怎么也提交不上去，后来clean了一下就提交上去了……)不过还是建议看看命令运行后的反馈，如果有 fatal 这样的字，而自己不知道哪里出了问题，建议可以重新安装一下hexo试试。</p>
+<p><strong>tips</strong>：千万不要手贱改了_config.yml文件中的url,博主开始一直上传失败但不知道为什么（也许是SSH因为换了邮箱也清除了的原因）就破罐子破摔把url改成自己的域名了，之后hexo d和g就各种失败，而当时还不知道是这个原因，只能重装了hexo……后来想到hexo不好可能是因为改了url，测试了一下发现确实是的……</p>
+<h2 id="u57DF_u540D_u7ED1_u5B9A"><a href="#u57DF_u540D_u7ED1_u5B9A" class="headerlink" title="域名绑定"></a>域名绑定</h2><p>如果不想用自己的域名可以跳过这部分~</p>
+<h3 id="u8D2D_u4E70_u57DF_u540D"><a href="#u8D2D_u4E70_u57DF_u540D" class="headerlink" title="购买域名"></a>购买域名</h3><p>博主是在<a href="https://sg.godaddy.com/zh/" target="_blank" rel="external">godaddy</a>上购买的，中文版网页，可以支付宝支付，很方便。注册账号（邮箱要用于验证，所以要填正确的邮箱地址哦）后，使用域名搜索来确定一个没有被购买的域名，选择后进入购物车，选择购买期限，填写结算信息，选择付款方式，付款成功后到邮箱查看激活邮件，激活后就可以在“我的账户-我的产品-域名”查看自己的域名了（没激活的时候是看不到的）~如果觉得说得比较简略，可以搜索一下详细教程哒~</p>
+<h3 id="DNS_u8BBE_u7F6E"><a href="#DNS_u8BBE_u7F6E" class="headerlink" title="DNS设置"></a>DNS设置</h3><p>因为godaddy被墙过有时候会无法解析，所以选择界面更好用更稳定免费的<a href="https://www.dnspod.cn/" target="_blank" rel="external">DNSpod</a>来解析域名。<br>注册之后，点击”域名解析”添加域名，点击添加的域名，修改设置如下图：</p>
+<p><img src="http://7xqrzp.com1.z0.glb.clouddn.com/leaxm%2Fdnspod.png" alt=""></p>
+<p>前两条A的记录指向的ip地址是github Pages的提供的ip，www的记录是你在github注册的仓库，记录值是你的GitHub页面地址yourname.github.io。</p>
+<p>接下来，要在godaddy网址修改DNS地址，将服务器改为DNSpod。登录goddady后，打开域名折叠框，在“动作”栏点击“管理DNS”，找到“域名服务器”栏，点击“管理”，如下图添加域名服务器就可以啦~</p>
+<p><img src="http://7xqrzp.com1.z0.glb.clouddn.com/leaxm%2Fdnssever.png" alt=""></p>
+<h3 id="u7ED1_u5B9A_u72EC_u7ACB_u57DF_u540D_u4E0EGitHub_Pages_u7684_u7A7A_u95F4"><a href="#u7ED1_u5B9A_u72EC_u7ACB_u57DF_u540D_u4E0EGitHub_Pages_u7684_u7A7A_u95F4" class="headerlink" title="绑定独立域名与GitHub Pages的空间"></a>绑定独立域名与GitHub Pages的空间</h3><p>登录GitHub，进入你建立的博客项目，在Repository的根目录下面，新建一个名为CNAME（注意不要写错啦，粗心的博主写错之后弄了半天没弄好才哭着发现问题是写错名字，而且是大写的哦）的文件，内容是你要绑定的域名，比如yourname.com。</p>
+<p><img src="http://7xqrzp.com1.z0.glb.clouddn.com/shiyi.PNG" alt=""></p>
+<p>注意啦，hexo文件夹中也要有这个文件哦，不然下次将hexo文件夹的内容上传到GitHub的时候，CNAME文件就会不见了，那域名就不管用啦。所以点击GitHub你建立的项目页的”Download Zip”，解压得到这个CNAME文件，复制到hexo文件夹中，就ok啦。</p>
+<p>最后在github中打开自己的库，进入库的设置Settings界面，如果看到了提示“Your site is published at <a href="http://yourname.com.”，说明配置成功啦。" target="_blank" rel="external">http://yourname.com.”，说明配置成功啦。</a></p>
+<p>以上过程都需要一些时间，所以不要着急，稍等一段时间。如果发现有问题就利用搜索引擎查一下有没有别人也遇到类似问题，实在不行，可能是自己粗心哪一步做错了，可以重新来一遍。</p>
+<h2 id="u603B_u7ED3"><a href="#u603B_u7ED3" class="headerlink" title="总结"></a>总结</h2><p>博主主要参考两个教程<a href="http://www.jianshu.com/p/05289a4bc8b2" target="_blank" rel="external">如何搭建一个独立博客——简明Github Pages与Hexo教程</a>和<a href="https://xuanwo.org/2015/03/26/hexo-intor/" target="_blank" rel="external">史上最详细的Hexo博客搭建图文教程</a>，两个都是在某些地方详细某些地方简略可以互相补充，个人感觉前一个逻辑没有后一个好，但是后一个某些地方略过了。还有遇到问题的时候google的一些参考文章，但是都比较简略。博主在尽量把步骤写清楚的基础上，也加入一些自己遇到的问题和解决方法，希望对你有所帮助。如果遇到问题，重新走一遍步骤一般是能解决的。在记录的过程中，自己也终于从混沌状态开始思路清晰，所以记录是有意义的，以后会多记录多总结的~最后，感谢参考教材，最终有了这个博客。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/02/08/如何搭建博客/" data-id="cikdpe0ex00001wg8i0dre9aa" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/02/08/如何搭建博客/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 leafxm<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>
