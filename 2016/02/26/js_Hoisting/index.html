@@ -1,0 +1,581 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>两个例子理解JavaScript中变量提升 | Leaf&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="leafxm">
+    
+    <meta name="description" content="变量提升的定义JS中的所谓的“变量提升”是指：函数声明和变量声明总是会被解释器悄悄“提升”到方法体最顶部。下面我们用两个例子来理解这句话。
+例1 理解变量声明提升首先，猜一猜这段程序的结果是什么？
+{JavaScript}
+var foo=1;
+function bar(){
+    if(!foo">
+    
+    
+    
+    
+    <link rel="alternate" href="atom.xml" title="Leaf&#39;s blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='yxm0530';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Leaf&#39;s blog">Leaf&#39;s blog</a></h1>
+				<a class="blog-motto"></a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+					<li>
+					
+						<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" class="st-default-search-input" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/02/26/js_Hoisting/" title="两个例子理解JavaScript中变量提升" itemprop="url">两个例子理解JavaScript中变量提升</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yoursite.com" title="leafxm">leafxm</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-02-26T14:01:48.000Z" itemprop="datePublished">2016-02-26</time>
+    更新日期:<time datetime="2016-02-28T15:55:17.474Z" itemprop="dateModified">2016-02-28</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#u53D8_u91CF_u63D0_u5347_u7684_u5B9A_u4E49"><span class="toc-number">1.</span> <span class="toc-text">变量提升的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u4F8B1__u7406_u89E3_u53D8_u91CF_u58F0_u660E_u63D0_u5347"><span class="toc-number">2.</span> <span class="toc-text">例1 理解变量声明提升</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u4F8B2__u7406_u89E3_u51FD_u6570_u58F0_u660E_u63D0_u5347"><span class="toc-number">3.</span> <span class="toc-text">例2 理解函数声明提升</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u53E6_u4E00_u4E2A_u95EE_u9898"><span class="toc-number">4.</span> <span class="toc-text">另一个问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u603B_u7ED3"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
+		</div>
+		
+		<h2 id="u53D8_u91CF_u63D0_u5347_u7684_u5B9A_u4E49"><a href="#u53D8_u91CF_u63D0_u5347_u7684_u5B9A_u4E49" class="headerlink" title="变量提升的定义"></a>变量提升的定义</h2><p>JS中的所谓的“变量提升”是指：函数声明和变量声明总是会被解释器悄悄“提升”到方法体最顶部。下面我们用两个例子来理解这句话。</p>
+<h2 id="u4F8B1__u7406_u89E3_u53D8_u91CF_u58F0_u660E_u63D0_u5347"><a href="#u4F8B1__u7406_u89E3_u53D8_u91CF_u58F0_u660E_u63D0_u5347" class="headerlink" title="例1 理解变量声明提升"></a>例1 理解变量声明提升</h2><p>首先，猜一猜这段程序的结果是什么？</p>
+<pre><code>{JavaScript}
+var foo=1;
+function bar(){
+    if(!foo){
+        var foo=10;
+    }
+    alert(foo);
+}
+bar();
+var foo=1;
+</code></pre><p>答案是10。你一定觉得奇怪<code>foo</code>应该等于1不会if判断条件根本不会成立啊。实际上，如第一部分所说，变量<code>foo</code>被提升到了<code>bar()</code>函数最顶部。我们来看下面这段程序：</p>
+<pre><code>function bar(){
+    console.log(foo)
+    if(!foo){
+        var foo=10;
+        console.log(foo)
+    }
+    console.log(foo)
+    alert(foo);
+}
+bar();
+</code></pre><p>结果是 undefined 10 10，说明当在函数内使用 <strong>var</strong> 定义变量的时候，这个变量的声明被提升到了bar() 函数的最开始。所以这个例子等同于</p>
+<pre><code>var foo=1;
+function bar(){
+    var foo；//定义局部变量foo
+    if(!foo){//foo是undefined，所以进入if语句内部
+        foo=10;
+    }
+    alert(foo);
+}
+bar();//结果是10
+</code></pre><p>现在你可以理解为什么会有上面的结果了吧~这里是否定义全局变量foo并没有影响。</p>
+<p>那么，如果第一个例子bar函数内部的<code>var foo=10;</code>改为<code>foo=10</code>，结果会怎么样呢？这时，变量就不再提升了。结果就变成了1，因为没有用var声明，变量不再提升。所以<code>if(!foo)</code>这句的时候会到函数外寻找定义的全局变量foo，结果是<strong>1</strong>，就不进入if内。此时，如果没有定义全局变量foo，就会报错了。也就是，<strong>只有在有var声明的时候变量才会被提升到方法体最顶部。</strong></p>
+<h2 id="u4F8B2__u7406_u89E3_u51FD_u6570_u58F0_u660E_u63D0_u5347"><a href="#u4F8B2__u7406_u89E3_u51FD_u6570_u58F0_u660E_u63D0_u5347" class="headerlink" title="例2 理解函数声明提升"></a>例2 理解函数声明提升</h2><p>我们再来看第二个例子：</p>
+<pre><code>var a=1;
+function b(){
+    a=10;
+    return;
+    function a(){}
+}
+b();
+alert(a);
+</code></pre><p>结果竟然是1.你一定会想：“为什么呢？明明函数内改变了全局变量a的值啊！”那么我们来看下面这段程序的结果：</p>
+<pre><code>var a=1;
+function b(){
+    console.log(a)
+    a=10;
+    return;    
+    function a(){}
+}
+b();
+alert(a);
+</code></pre><p>结果是<code>function a(){}</code>。这里也就是说a()函数被提升到前面去了。b()的定义相当于：</p>
+<pre><code>function b(){
+    function a(){}//定义局部变量a
+    a=10;
+    return;        
+}
+</code></pre><p>也就是说因为a()函数被提升到b()函数最开头，所以相当于定义了一个局部变量a，也就是让a=10，是对局部变量赋值，所以不会影响到全局变量a的值，最终结果是1.</p>
+<p>现在来复习一下我们例1所讲知识：如果例2这里不是用<code>function a(){}</code>，而是改为<code>var a</code>呢？如果把var 也去掉改为<code>a</code>呢？聪明的你应该已经想到了答案：第一问中console.log()的结果变成了 <code>undefined</code>，而alert结果也是1；第二问中console.log()的结果就变成了 <code>1</code>，而alert结果变成了10.如果你还不懂为什么，再复习一下例1吧！</p>
+<p>这里，还有注意一点，变量提升的时候，只是声明提升了而赋值并没有被提升。函数提升的时候，则要看函数定义方式，如果是函数声明<code>var foo=function(){}</code>这时候只有foo的声明会提升，也就是最开始只有<code>var foo;</code>,它指向的函数体并不会提升（这时候foo可以看成是一个变量提升）；如果是函数表达式<code>function foo(){}</code>此时函数体会和函数式的声明一起提升。</p>
+<h2 id="u53E6_u4E00_u4E2A_u95EE_u9898"><a href="#u53E6_u4E00_u4E2A_u95EE_u9898" class="headerlink" title="另一个问题"></a>另一个问题</h2><p>在群里看到这样一个问题：</p>
+<pre><code>var arr=[1,2,3,4,5];
+var arr2=[];
+for (var i=0;i&lt;arr.length ;i++ )
+{ 
+    arr2.push(function(){alert(i)});
+}
+
+arr2[1]();
+</code></pre><p>输出结果会是什么呢？<br>最后的结果是5.为什么会这样呢？我们来看下面这个程序</p>
+<pre><code>var arr=[1,2,3,4,5];
+var arr2=[];
+for (var i=0;i&lt;arr.length ;i++ )
+{
+    arr2.push(function(){alert(i)});
+    console.log(i,arr2[i]);
+}
+arr2[1]();
+</code></pre><p>结果是</p>
+<pre><code>0 function(){alert(i)}
+1 function(){alert(i)}
+2 function(){alert(i)}
+3 function(){alert(i)}
+4 function(){alert(i)}
+</code></pre><p>也就是说，arr2[]中存放了5个<code>function(){alert(i)}</code>，而不是i分别赋值了0~4的形式。</p>
+<p>我本来理解的是，<code>arr2[1]();</code>这句执行的时候就相当于执行<code>alert(i)</code>,因为最后i是全局变量，它的值是5，所以最后出来是5.但是我把for循环放到函数里，i变成局部变量：</p>
+<pre><code>var arr=[1,2,3,4,5];
+var arr2=[];
+function b(){
+    for (var i=0;i&lt;arr.length ;i++ )
+    {    
+        arr2.push(function(){alert(i)});
+        console.log(i,arr2[i]);
+    }
+
+}
+b();
+arr2[1]();
+</code></pre><p>结果竟然和上面一样！并没有因为在外部没有定义i而有任何影响！于是我改成了下面这样：</p>
+<pre><code>var arr=[1,2,3,4,5];
+var arr2=[];
+function b(){
+    for (var i=0;i&lt;5 ;i++ )
+    {    
+        arr2.push(function(){alert(i)});
+        arr2[i]();
+    }
+    arr2[1]();
+}
+b();
+</code></pre><p>结果是alert了0,1,2,3,4,5.也就是说每次<code>arr2[i]()</code>这个函数执行的时候，都会把i现在的值带入，我改成<code>arr2[0]()</code>也是一样的结果。所以我认为是这个<code>arr2[0]</code>存的是<code>function(){alert(i)}</code>，其中i是赋到整个作用域结束的时候的值。下面这段程序的结果验证了我的想法：</p>
+<pre><code>var arr=[1,2,3,4,5];
+var arr2=[];
+function b(){
+    for (var i=0;i&lt;arr.length ;i++ )
+    {    
+        arr2.push(function(){alert(i)});
+        console.log(i,arr2[i]);
+    }
+    i=10;
+}
+b();
+arr2[1]();
+</code></pre><p>最后的结果是10.</p>
+<p>为什么会这样呢？我理解的应该也是变量提升的原因。加了b()函数的程序可以等价与下面的形式：</p>
+<pre><code>var arr=[1,2,3,4,5];
+var arr2=[];
+function b(){
+    var i；
+    function(){alert(i)}；
+    for (i=0;i&lt;5 ;i++ )
+    {    
+        arr2.push(function(){alert(i)});
+    }
+}
+b();
+</code></pre><p>每个arr2里面存的是<code>function(){alert(i)}；</code>,而最后局部变量<code>i</code>的值等于5，所以最终给i赋值5.</p>
+<h2 id="u603B_u7ED3"><a href="#u603B_u7ED3" class="headerlink" title="总结"></a>总结</h2><p>相信通过这三个问题，你对作用域和变量提升有了更深的理解~总结有以下几点：</p>
+<ol>
+<li>使用<code>var</code>声明的变量（包括函数）其声明会被提升到方法体最顶部，而赋值不会被提升；</li>
+<li>未使用<code>var</code>声明的变量，不会被提升；</li>
+<li>使用函数表达式<code>function foo(){}</code>定义的函数会函数声明连带函数体提升到方法体最顶部；</li>
+<li>注意js中的作用域问题，js中没有块作用域。</li>
+</ol>
+<p>关于作用域和变量声明的问题，ECMAScript参考文档中有这么一句话：</p>
+<blockquote>
+<p>如果变量在在函数体内声明，在它是函数作用域。否则，它是全局作用域。变量将会在执行进入作用域时被创建。块不会定义新的作用域，只有函数声明和程序才可以。变量在创建的时候会被初始化为undefined。如果变量声明语句带有赋值操作，则赋值操作只有在被执行的时候才会发生，而不是创建的时候。</p>
+</blockquote>
+<p>理解好这段话，对你理解js中的变量提升问题有很大的帮助~</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/JavaScript/">JavaScript</a><a href="/tags/变量提升/">变量提升</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/总结/">总结</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yoursite.com/2016/02/26/js_Hoisting/" data-title="两个例子理解JavaScript中变量提升 | Leaf&#39;s blog" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/02/20/mapShow/"  title="如何在百度地图实现简单的迁徙效果">
+ <strong>NEXT:</strong><br/> 
+ <span>如何在百度地图实现简单的迁徙效果
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="两个例子理解JavaScript中变量提升" data-thread-key="js_Hoisting" data-author-key="leafxm" data-url="http://yoursite.com/post/js_Hoisting"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#u53D8_u91CF_u63D0_u5347_u7684_u5B9A_u4E49"><span class="toc-number">1.</span> <span class="toc-text">变量提升的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u4F8B1__u7406_u89E3_u53D8_u91CF_u58F0_u660E_u63D0_u5347"><span class="toc-number">2.</span> <span class="toc-text">例1 理解变量声明提升</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u4F8B2__u7406_u89E3_u51FD_u6570_u58F0_u660E_u63D0_u5347"><span class="toc-number">3.</span> <span class="toc-text">例2 理解函数声明提升</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u53E6_u4E00_u4E2A_u95EE_u9898"><span class="toc-number">4.</span> <span class="toc-text">另一个问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u603B_u7ED3"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo" ></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		
+		
+		<a href="https://github.com/leafxm" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/总结/" title="总结">总结<sup>1</sup></a></li>
+		
+			<li><a href="/categories/教程/" title="教程">教程<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>2</sup></a></li>
+		
+			<li><a href="/tags/github/" title="github">github<sup>1</sup></a></li>
+		
+			<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+		
+			<li><a href="/tags/变量提升/" title="变量提升">变量提升<sup>1</sup></a></li>
+		
+			<li><a href="/tags/百度地图/" title="百度地图">百度地图<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2016 
+		
+		<a href="http://yoursite.com" target="_blank" title="leafxm">leafxm</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+		<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+  
+  _st('install','VJyggzynWWh5kw3F7Gzq','2.0.0');
+</script>
+	    </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"null"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '4';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+
+  </body>
+</html>
+
