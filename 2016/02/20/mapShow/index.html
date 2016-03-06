@@ -83,7 +83,7 @@
     </p>
   <p class="article-time">
     <time datetime="2016-02-20T08:15:00.000Z" itemprop="datePublished">2016-02-20</time>
-    更新日期:<time datetime="2016-02-26T04:50:47.267Z" itemprop="dateModified">2016-02-26</time>
+    更新日期:<time datetime="2016-03-06T07:03:24.944Z" itemprop="dateModified">2016-03-06</time>
     
   </p>
 </header>
@@ -99,146 +99,43 @@
 <a id="more"></a>
 <h2 id="u521D_u59CB_u5316_u5DE5_u4F5C"><a href="#u521D_u59CB_u5316_u5DE5_u4F5C" class="headerlink" title="初始化工作"></a>初始化工作</h2><h3 id="u8981_u7528_u5230_u7684_u6570_u636E"><a href="#u8981_u7528_u5230_u7684_u6570_u636E" class="headerlink" title="要用到的数据"></a>要用到的数据</h3><p>为了方便理解程序，首先介绍要用到的数据。这里，我们使用<code>lonlat</code>数组来存储地点的经纬度信息。<code>data.N</code>来存储地点的人数信息，比如<code>data.N[j][i]</code>就表示第<code>j</code>次变化时第<code>i</code>个地点的人数。<code>data.M</code>来存储移动的人数，比如<code>data.M[j][i][k]</code>表示第<code>j</code>次变化时第<code>i</code>个地点向第<code>k</code>个地点转移的人数。</p>
 <h3 id="u521B_u5EFA_u5E76_u521D_u59CB_u5316_u767E_u5EA6_u5730_u56FE"><a href="#u521B_u5EFA_u5E76_u521D_u59CB_u5316_u767E_u5EA6_u5730_u56FE" class="headerlink" title="创建并初始化百度地图"></a>创建并初始化百度地图</h3><p>首先，加入一个id 为”map”的  div。并设置它的css样式，这里为了简便，就直接用”style”设置了。</p>
-<pre><code>&lt;div id=&quot;map&quot; style=&quot;height:600px;width:100%;&quot;&gt;&lt;/div&gt;
-</code></pre><p>js中初始化地图主要是以下三句：</p>
-<pre><code>var map = new BMap.Map(&quot;map&quot;,{minZoom:18,maxZoom:19});   // 创建地图实例
-var pt_center = new BMap.Point(116.364506, 39.969775);//创建一个点
-map.centerAndZoom(pt_center,19 );         // 初始化地图，设置中心点坐标和地图级别
-</code></pre><h2 id="u5728_u767E_u5EA6_u5730_u56FE_u4E0A_u6DFB_u52A0_u5730_u70B9_u6807_u8BC6_u548C_u79FB_u52A8_u7B26_u53F7_u6807_u8BC6"><a href="#u5728_u767E_u5EA6_u5730_u56FE_u4E0A_u6DFB_u52A0_u5730_u70B9_u6807_u8BC6_u548C_u79FB_u52A8_u7B26_u53F7_u6807_u8BC6" class="headerlink" title="在百度地图上添加地点标识和移动符号标识"></a>在百度地图上添加地点标识和移动符号标识</h2><h3 id="u5229_u7528label_u5B9E_u73B0_u5706_u5F62_u6807_u8BC6"><a href="#u5229_u7528label_u5B9E_u73B0_u5706_u5F62_u6807_u8BC6" class="headerlink" title="利用label实现圆形标识"></a>利用label实现圆形标识</h3><p>这里，圆形标识主要用来表示一个地点，标识中有数字来表示这个位置的人数。百度地图自定义 marker 比较复杂也不够灵活，所以这里我们用 label 来实现。</p>
-<pre><code>var myLabel = new BMap.Label(&quot;&lt;p&gt;&quot;+data.N[j][i]+&quot;&lt;/p&gt;&quot;,     //为lable填写内容
-{
-    position: new BMap.Point(lonlat[i].Longitude,lonlat[i].Latitude)});  //label的位置
-myLabel.setStyle({       //给label设置样式，任意的CSS都可以
-      height:&quot;24px&quot; ,         //高度
-    width:&quot;24px&quot;,           //宽
-    borderRadius:&quot;12px&quot;,    //边框圆角半径，设置为边长的一半就变成圆了
-    opacity:&quot;0.8&quot;,            //透明度
-    border:&quot;0&quot;,             //边框设置成无
-    color:”black&quot;,            //文字颜色
-    fontSize:&quot;22px&quot;,        //字号
-    textAlign:&quot;center&quot;,     //文字水平居中显示
-    lineHeight:&quot;20px&quot;,      //行高，设置文字位置
-});
-</code></pre><p>这里用到了每个地点的经纬度信息和人数信息。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span> <span class="attribute">style</span>=<span class="value">"height:600px;width:100%;"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>js中初始化地图主要是以下三句：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> map = <span class="keyword">new</span> BMap.Map(<span class="string">"map"</span>,&#123;minZoom:<span class="number">18</span>,maxZoom:<span class="number">19</span>&#125;);   <span class="comment">// 创建地图实例</span></span><br><span class="line">   <span class="keyword">var</span> pt_center = <span class="keyword">new</span> BMap.Point(<span class="number">116.364506</span>, <span class="number">39.969775</span>);<span class="comment">//创建一个点</span></span><br><span class="line">   map.centerAndZoom(pt_center,<span class="number">19</span> );         <span class="comment">// 初始化地图，设置中心点坐标和地图级别</span></span><br></pre></td></tr></table></figure>
+<h2 id="u5728_u767E_u5EA6_u5730_u56FE_u4E0A_u6DFB_u52A0_u5730_u70B9_u6807_u8BC6_u548C_u79FB_u52A8_u7B26_u53F7_u6807_u8BC6"><a href="#u5728_u767E_u5EA6_u5730_u56FE_u4E0A_u6DFB_u52A0_u5730_u70B9_u6807_u8BC6_u548C_u79FB_u52A8_u7B26_u53F7_u6807_u8BC6" class="headerlink" title="在百度地图上添加地点标识和移动符号标识"></a>在百度地图上添加地点标识和移动符号标识</h2><h3 id="u5229_u7528label_u5B9E_u73B0_u5706_u5F62_u6807_u8BC6"><a href="#u5229_u7528label_u5B9E_u73B0_u5706_u5F62_u6807_u8BC6" class="headerlink" title="利用label实现圆形标识"></a>利用label实现圆形标识</h3><p>这里，圆形标识主要用来表示一个地点，标识中有数字来表示这个位置的人数。百度地图自定义 marker 比较复杂也不够灵活，所以这里我们用 label 来实现。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">var myLabel = new BMap.Label("&lt;p&gt;"+data.N[j][i]+"&lt;/p&gt;",     //为lable填写内容</span><br><span class="line">   &#123;</span><br><span class="line">	position: new BMap.Point(lonlat[i].Longitude,lonlat[i].Latitude)&#125;);  //label的位置</span><br><span class="line">myLabel.setStyle(&#123;       //给label设置样式，任意的CSS都可以</span><br><span class="line"> 		height:"24px" ,         //高度</span><br><span class="line">   	width:"24px",           //宽</span><br><span class="line">	borderRadius:"12px",	//边框圆角半径，设置为边长的一半就变成圆了</span><br><span class="line">	opacity:"0.8",			//透明度</span><br><span class="line">	border:"0", 			//边框设置成无</span><br><span class="line">	color:”black",			//文字颜色</span><br><span class="line">	fontSize:"22px",        //字号</span><br><span class="line">	textAlign:"center",     //文字水平居中显示</span><br><span class="line">	lineHeight:"20px",      //行高，设置文字位置</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>这里用到了每个地点的经纬度信息和人数信息。</p>
 <p>我们需要一个效果——地点人数不同的时候，圆形 label 的颜色不同，所以我们需要使用if语句来判断人数的范围：</p>
-<pre><code>if(data.N[j][i]&lt;a0){ 
-    myLabel.setStyle({background:&quot;#ffcc00&quot;, }); }
-</code></pre><p>这样我们就可以得到一个下图这样带有数字的圆形标识啦~</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(data.N[j][i]&lt;a0)&#123; </span><br><span class="line">	myLabel.setStyle(&#123;background:<span class="string">"#ffcc00"</span>, &#125;); &#125;</span><br></pre></td></tr></table></figure>
+<p>这样我们就可以得到一个下图这样带有数字的圆形标识啦~</p>
 <p><img src="http://7xqrzp.com1.z0.glb.clouddn.com/demolabel.PNG" alt="" title="圆形标识"></p>
 <p>关于label你想知道更详细的内容，可以参考这篇博文：<a href="http://www.cnblogs.com/milkmap/archive/2011/08/24/2151073.html" target="_blank" rel="external">【百度地图API】——如何用label制作简易的房产标签.</a></p>
 <h3 id="u6DFB_u52A0_u8F68_u8FF9_u548C_u81EA_u5B9A_u4E49_u56FE_u6807marker"><a href="#u6DFB_u52A0_u8F68_u8FF9_u548C_u81EA_u5B9A_u4E49_u56FE_u6807marker" class="headerlink" title="添加轨迹和自定义图标marker"></a>添加轨迹和自定义图标marker</h3><p>添加轨迹利用百度地图的 BMap.Polyline(point0，point1) 即可。代码如下：</p>
-<pre><code>var polyline = new BMap.Polyline(new BMap.Point(lonlat[i].Longitude+lon, lonlat[i].Latitude-lat),new BMap.Point(lonlat[k].Longitude+lon, lonlat[k].Latitude-lat)], {    
-    strokeColor:&quot;#FFCC00&quot;,         //轨迹线的颜色
-     strokeWeight:3,             //轨迹线的粗细
-    strokeOpacity:0.8});        //轨迹线的透明度
-map.addOverlay(polyline);        //在地图中加入轨迹
-</code></pre><p><code>lon</code> 和 <code>lat</code> 都是为了让轨迹从圆形 label 的中间出来而设置的偏移量。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> polyline = <span class="keyword">new</span> BMap.Polyline(<span class="keyword">new</span> BMap.Point(lonlat[i].Longitude+lon, lonlat[i].Latitude-lat),<span class="keyword">new</span> BMap.Point(lonlat[k].Longitude+lon, lonlat[k].Latitude-lat)], &#123;	</span><br><span class="line">	strokeColor:<span class="string">"#FFCC00"</span>, 		<span class="comment">//轨迹线的颜色</span></span><br><span class="line"> 	strokeWeight:<span class="number">3</span>, 			<span class="comment">//轨迹线的粗细</span></span><br><span class="line">	strokeOpacity:<span class="number">0.8</span>&#125;);		<span class="comment">//轨迹线的透明度</span></span><br><span class="line">map.addOverlay(polyline);		<span class="comment">//在地图中加入轨迹</span></span><br></pre></td></tr></table></figure>
+<p><code>lon</code> 和 <code>lat</code> 都是为了让轨迹从圆形 label 的中间出来而设置的偏移量。</p>
 <p>为了在轨迹上用 marker 的移动来表示人员移动方向，我们需要添加自定义图标。因为我们需要在图标上用数字表示移动人员数，所以这里也选择用 label 来实现。代码如下：</p>
-<pre><code>var marker= new BMap.Label(&quot;&lt;p&gt;&quot;+data.M[j][i][k]+&quot;&lt;/p&gt;&quot;,     //为lable填写内容
-{    offset:new BMap.Size(-16,-16),         //label的偏移量
-    position:new BMap.Point(lonlat[i].Longitude+lon+d_lon,lonlat[i].Latitude-lat+d_lat)    //label的位置
-});
-marker.setStyle({                                  
-    fontSize:&quot;14px&quot;,               //字号
-    border:&quot;0&quot;,                    //边
-    height:&quot;25px&quot;,                //高度
-    width:&quot;25px&quot;,                 //宽
-    textAlign:&quot;center&quot;,            //文字水平居中显示
-    background:&quot;url(img/marker.png)&quot;,    //自定义图标的图片
-    color:&quot;blue&quot;,        //文字颜色
-    fontWeight:&quot;bold&quot;,        //文字加粗
-});
-map.addOverlay(marker);    
-</code></pre><h2 id="u8BA9_u4F60_u7684_u56FE_u52A8_u8D77_u6765"><a href="#u8BA9_u4F60_u7684_u56FE_u52A8_u8D77_u6765" class="headerlink" title="让你的图动起来"></a>让你的图动起来</h2><h3 id="setTimeout_28_29_u548CsetInterval_28_29"><a href="#setTimeout_28_29_u548CsetInterval_28_29" class="headerlink" title="setTimeout()和setInterval()"></a>setTimeout()和setInterval()</h3><p>setTimeout() 用于在指定的毫秒数<strong>后</strong>调用函数或计算表达式（只运行一次）。而 setInterval() 可按照指定的毫秒数<strong>周期性</strong>地调用函数或计算表达式（第一次调用也是指定的毫秒数后）。但是 setTimeout() 函数也可以用于循环执行的——当函数自身再次调用 setTimeout() 的时候。</p>
-<p>关于这两个函数的作用方法，我们知道，JavaScript是以单线程方式运行于浏览器的JS引擎中的，所以要以单线程的方式理解它，setTimeout() 和 setInterval() 会把要执行的代码在设定的时间点插入js引擎维护的一个代码队列中，所以时间到了如果前面的代码没有执行完它并不一定就会执行，而假如setTimeout()引入循环的话，这句后面的语句会执行之后再过一段时间来执行这个循环。比如：</p>
-<pre><code>var j=0;
-function a(){
-    var time=new Date().getMinutes()+&quot;:&quot;+new Date().getSeconds();
-    console.log(&quot;before time:&quot;,time,&quot;j:&quot;,j);
-    if(j&lt;1){
-        var timeid=setTimeout(function(){a()},2000);
-        j++;console.log(&quot;after:time:&quot;,time,&quot;j:&quot;,j);}
-    else{clearTimeout(timeid);}
-}
-a();
-</code></pre><p>这段程序console中呈现的结果是：</p>
-<pre><code>before time: 33:39 j: 0
-after time: 33:39 j: 1
-before time: 33:41 j: 1
-</code></pre><p>也就是说<code>j++;</code>这句是直接跟 setTimeout() 后面马上执行的。相信这样你能更了解到 setTimeout() 函数如何作用的了吧~ </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> marker= <span class="keyword">new</span> BMap.Label(<span class="string">"&lt;p&gt;"</span>+data.M[j][i][k]+<span class="string">"&lt;/p&gt;"</span>,     <span class="comment">//为lable填写内容</span></span><br><span class="line">&#123;	offset:<span class="keyword">new</span> BMap.Size(-<span class="number">16</span>,-<span class="number">16</span>),         <span class="comment">//label的偏移量</span></span><br><span class="line">	position:<span class="keyword">new</span> BMap.Point(lonlat[i].Longitude+lon+d_lon,lonlat[i].Latitude-lat+d_lat)    <span class="comment">//label的位置</span></span><br><span class="line">&#125;);</span><br><span class="line">marker.setStyle(&#123;                                  </span><br><span class="line">	fontSize:<span class="string">"14px"</span>,               <span class="comment">//字号</span></span><br><span class="line">	border:<span class="string">"0"</span>,                    <span class="comment">//边</span></span><br><span class="line">	height:<span class="string">"25px"</span>,                <span class="comment">//高度</span></span><br><span class="line">	width:<span class="string">"25px"</span>,                 <span class="comment">//宽</span></span><br><span class="line">	textAlign:<span class="string">"center"</span>,            <span class="comment">//文字水平居中显示</span></span><br><span class="line">	background:<span class="string">"url(img/marker.png)"</span>,    <span class="comment">//自定义图标的图片</span></span><br><span class="line">	color:<span class="string">"blue"</span>,		<span class="comment">//文字颜色</span></span><br><span class="line">	fontWeight:<span class="string">"bold"</span>,		<span class="comment">//文字加粗</span></span><br><span class="line">&#125;);</span><br><span class="line">map.addOverlay(marker);</span><br></pre></td></tr></table></figure>
+<h2 id="u8BA9_u4F60_u7684_u56FE_u52A8_u8D77_u6765"><a href="#u8BA9_u4F60_u7684_u56FE_u52A8_u8D77_u6765" class="headerlink" title="让你的图动起来"></a>让你的图动起来</h2><h3 id="setTimeout_28_29_u548CsetInterval_28_29"><a href="#setTimeout_28_29_u548CsetInterval_28_29" class="headerlink" title="setTimeout()和setInterval()"></a>setTimeout()和setInterval()</h3><p>setTimeout() 用于在指定的毫秒数<strong>后</strong>调用函数或计算表达式（只运行一次）。而 setInterval() 可按照指定的毫秒数<strong>周期性</strong>地调用函数或计算表达式（第一次调用也是指定的毫秒数后）。但是 setTimeout() 函数也可以用于循环执行的——当函数自身再次调用 setTimeout() 的时候。</p>
+<p>关于这两个函数的作用方法，我们知道，JavaScript是以单线程方式运行于浏览器的JS引擎中的，所以要以单线程的方式理解它，setTimeout() 和 setInterval() 会把要执行的代码在设定的时间点插入js引擎维护的一个代码队列中，所以时间到了如果前面的代码没有执行完它并不一定就会执行。而且这两个函数是异步执行的，所以在它们后面的语句可能反而会比它要先执行。比如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="built_in">console</span>.log(<span class="string">"setTimeout"</span>)&#125;,<span class="number">2000</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"hello"</span>);</span><br></pre></td></tr></table></figure>
+<p>这段程序console中呈现的结果是：</p>
+<pre><code>hello
+setTimeout
+</code></pre><p>这是因为setTimeout函数将<code>console.log(&quot;setTimeout&quot;)</code>这句在2s后插入js代码队列，而由于异步执行，<code>console.log(&quot;hello&quot;)</code>这句会先执行。相信这样你能更了解到 setTimeout() 函数如何作用的了吧~ </p>
 <p>我们这里利用setTimeout()函数来实现动态展示的功能。篇幅限制，关于它们的定义、使用例子可以参考<a href="http://www.haorooms.com/post/js_setTimeout/" target="_blank" rel="external">javascript的setTimeout()用法总结，js的setTimeout()方法</a>，关于它们的作用方式可以参考<a href="http://www.jb51.net/article/26679.htm" target="_blank" rel="external">setTimeout和setInterval的区别你真的了解吗?</a>。百度or google 一下可以找到很多资料哦~</p>
 <h3 id="u52A8_u8D77_u6765_21"><a href="#u52A8_u8D77_u6765_21" class="headerlink" title="动起来!"></a>动起来!</h3><p>可以看到，这里我们使用了两次 setTimeout() 函数来实现动态变化。外循环是各个地点人数和地点间轨迹间隔一段时候后刷新，内循环是轨迹上的 marker 一次次变换位置。为了逻辑更清晰，下面用伪代码形式展现：</p>
 <p>首先，我们要进行初始化设置：</p>
-<pre><code>j = 0;//第j次刷新图
-movei=0;//marker移动次数
-var TimeID=null;//外层setTimeout函数ID
-var moveTime=null;//内层setTimeout函数ID
-</code></pre><p>实现外循环的函数叫<code>delay()</code>,实现内循环的函数叫<code>delayMove()</code>。首先进入<code>delay()</code><br>函数，为了清晰，下面就用伪代码表示结构啦。</p>
-<pre><code>function delay(){
-    if(j&lt;data.N.length)//总转移次数内
-    {     在地图上显示每个地点的圆形label；
-        判断地点之间是否有转移，有则画轨迹；
-        window.clearTimeout(moveTime);
-        if(j&lt;data.N.length-1){
-            moveTime= window.setTimeout(function(){delayMove();}, 500)
-        }    //在最后一次显示之前都有轨迹要显示marker移动效果            
-        TimeID = window.setTimeout(function(){delay();}, 5000);
-            //注意这两个函数设置的时间，第二个应大于第一个乘以marker移动次数
-    }
-    else{ //显示完毕后，清除定时器
-        window.clearTimeout(moveTime);
-       j = 0;
-       window.clearTimeout(TimeID);
-     }    
-}    
-</code></pre><p>接下来，deayMove函数结构如下：</p>
-<pre><code>var moveMarker=new Array();//为了清除上次地图上的marker而设置
-function delayMove(){
-    var movei_max=8;//最大的移动次数
-    if(movei&lt;movei_max){
-        清除moveMarker所存的marker；
-        给每条轨迹加上marker；
-        moveMarker用这次的各个marker覆盖上次的；
-        }
-        movei++;
-        moveTime= window.setTimeout(function(){delayMove();}, 500);    
-    }else{//大于最大移动次数后
-        在地图上清除moveMarker；
-        j++;
-        movei=0;
-        window.clearTimeout(moveTime);
-    }
-}    
-</code></pre><p>我们注意到，上面<code>j++;</code>这句写在了每次marker移动完毕内循环结束后，这是因为上面我们讲到的在setTimeout函数后面执行的语句会马上执行，所以把它放到这里，避免混乱~</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">j = <span class="number">0</span>;<span class="comment">//第j次刷新图</span></span><br><span class="line">movei=<span class="number">0</span>;<span class="comment">//marker移动次数</span></span><br><span class="line"><span class="keyword">var</span> TimeID=<span class="literal">null</span>;<span class="comment">//外层setTimeout函数ID</span></span><br><span class="line">   <span class="keyword">var</span> moveTime=<span class="literal">null</span>;<span class="comment">//内层setTimeout函数ID</span></span><br></pre></td></tr></table></figure>
+<p>实现外循环的函数叫<code>delay()</code>,实现内循环的函数叫<code>delayMove()</code>。首先进入<code>delay()</code><br>函数，为了清晰，下面就用伪代码表示结构啦。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">delay</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(j&lt;data.N.length)<span class="comment">//总转移次数内</span></span><br><span class="line">	&#123; 	在地图上显示每个地点的圆形label；</span><br><span class="line">		判断地点之间是否有转移，有则画轨迹；</span><br><span class="line">		<span class="built_in">window</span>.clearTimeout(moveTime);</span><br><span class="line">		<span class="keyword">if</span>(j&lt;data.N.length-<span class="number">1</span>)&#123;</span><br><span class="line">			moveTime= <span class="built_in">window</span>.setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;delayMove();&#125;, <span class="number">500</span>)</span><br><span class="line">		&#125;	<span class="comment">//在最后一次显示之前都有轨迹要显示marker移动效果			</span></span><br><span class="line">		TimeID = <span class="built_in">window</span>.setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;delay();&#125;, <span class="number">5000</span>);</span><br><span class="line">			<span class="comment">//注意这两个函数设置的时间，第二个应大于第一个乘以marker移动次数</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123; <span class="comment">//显示完毕后，清除定时器</span></span><br><span class="line">		<span class="built_in">window</span>.clearTimeout(moveTime);</span><br><span class="line">          j = <span class="number">0</span>;</span><br><span class="line">          <span class="built_in">window</span>.clearTimeout(TimeID);</span><br><span class="line">        &#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来，deayMove函数结构如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> moveMarker=<span class="keyword">new</span> <span class="built_in">Array</span>();<span class="comment">//为了清除上次地图上的marker而设置</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">delayMove</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> movei_max=<span class="number">8</span>;<span class="comment">//最大的移动次数</span></span><br><span class="line">	<span class="keyword">if</span>(movei&lt;movei_max)&#123;</span><br><span class="line">		清除moveMarker所存的marker；</span><br><span class="line">		给每条轨迹加上marker；</span><br><span class="line">		moveMarker用这次的各个marker覆盖上次的；</span><br><span class="line">		&#125;</span><br><span class="line">		movei++;</span><br><span class="line">		moveTime= <span class="built_in">window</span>.setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;delayMove();&#125;, <span class="number">500</span>);	</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;<span class="comment">//大于最大移动次数后</span></span><br><span class="line">		在地图上清除moveMarker；</span><br><span class="line">		j++;</span><br><span class="line">		movei=<span class="number">0</span>;</span><br><span class="line">		<span class="built_in">window</span>.clearTimeout(moveTime);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们注意到，上面<code>j++;</code>这句写在了每次marker移动完毕内循环结束后，这是因为上面我们讲到的在setTimeout函数后面执行的语句会马上执行，所以把它放到这里，避免混乱~</p>
 <h3 id="u5F00_u59CB_u3001_u6682_u505C_u548C_u91CD_u65B0_u5F00_u59CB_u529F_u80FD"><a href="#u5F00_u59CB_u3001_u6682_u505C_u548C_u91CD_u65B0_u5F00_u59CB_u529F_u80FD" class="headerlink" title="开始、暂停和重新开始功能"></a>开始、暂停和重新开始功能</h3><p>我们使用两个按键，一个id为”stop”的按键表示暂停，按下后变成开始。一个id为”start”的按键表示重新开始。首先，介绍”stop”的功能：</p>
-<pre><code>document.getElementById(&quot;stop&quot;).addEventListener(&quot;click&quot;,function(){
-    var btn=document.getElementById(&quot;stop&quot;);
-    if(btn.value==&quot;暂停&quot;){            
-        btn.value=&quot;开始&quot;;
-        //暂停清除定时器，但是全局变量j和movei的值不要清除，记录暂停位置
-          window.clearTimeout(TimeID);
-        window.clearTimeout(moveTime);
-    }else{
-        btn.value=&quot;暂停&quot;;
-        var delayTime=500;
-        //movei=0进入要先进入下次delay()，delay()中再调用delayMove()
-        if(movei!=0){
-            moveTime= window.setTimeout(function(){delayMove();}, 500);
-            delayTime=500*(10-movei);        
-        }
-        //如果是演示结束后按&quot;开始&quot;就重新开始
-        if(j==(data.N.length-1)&amp;&amp;movei==0)    {getMove()}
-        else{//否则进入delay()
-        TimeID = window.setTimeout(function(){delay();},delayTime);    
-    }
-    }
-});
-</code></pre><p>重新开始功能就比较简单了：</p>
-<pre><code>document.getElementById(&quot;start&quot;).addEventListener(&quot;click&quot;,function(){    
-    document.getElementById(&quot;stop&quot;).value=&quot;暂停&quot;;
-  getMove();
-}); 
-</code></pre><h2 id="u603B_u7ED3"><a href="#u603B_u7ED3" class="headerlink" title="总结"></a>总结</h2><p>全部的js代码<a href="https://github.com/leafxm/demo" target="_blank" rel="external">点这里的 js/trace/trace.js</a>。程序主要使用了两次setTimeout()来完成动态显示功能。这篇博文把效果拆分成了几个部分分别来讲解，这样便于理解各部分的实现，但是对整个实现的思路可能会表述不够清楚，对着全部代码看一下应该还是比较容易理解的~</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">"stop"</span>).addEventListener(<span class="string">"click"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> btn=<span class="built_in">document</span>.getElementById(<span class="string">"stop"</span>);</span><br><span class="line">	<span class="keyword">if</span>(btn.value==<span class="string">"暂停"</span>)&#123;			</span><br><span class="line">		btn.value=<span class="string">"开始"</span>;</span><br><span class="line">		<span class="comment">//暂停清除定时器，但是全局变量j和movei的值不要清除，记录暂停位置</span></span><br><span class="line">	  	<span class="built_in">window</span>.clearTimeout(TimeID);</span><br><span class="line">		<span class="built_in">window</span>.clearTimeout(moveTime);</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		btn.value=<span class="string">"暂停"</span>;</span><br><span class="line">		<span class="keyword">var</span> delayTime=<span class="number">500</span>;</span><br><span class="line">		<span class="comment">//movei=0进入要先进入下次delay()，delay()中再调用delayMove()</span></span><br><span class="line">		<span class="keyword">if</span>(movei!=<span class="number">0</span>)&#123;</span><br><span class="line">			moveTime= <span class="built_in">window</span>.setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;delayMove();&#125;, <span class="number">500</span>);</span><br><span class="line">			delayTime=<span class="number">500</span>*(<span class="number">10</span>-movei);		</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//如果是演示结束后按"开始"就重新开始</span></span><br><span class="line">		<span class="keyword">if</span>(j==(data.N.length-<span class="number">1</span>)&amp;&amp;movei==<span class="number">0</span>)	&#123;getMove()&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;<span class="comment">//否则进入delay()</span></span><br><span class="line">		TimeID = <span class="built_in">window</span>.setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;delay();&#125;,delayTime);	</span><br><span class="line">	&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>重新开始功能就比较简单了：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">"start"</span>).addEventListener(<span class="string">"click"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;	</span><br><span class="line">	<span class="built_in">document</span>.getElementById(<span class="string">"stop"</span>).value=<span class="string">"暂停"</span>;</span><br><span class="line">  getMove();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="u603B_u7ED3"><a href="#u603B_u7ED3" class="headerlink" title="总结"></a>总结</h2><p>全部的js代码<a href="https://github.com/leafxm/demo" target="_blank" rel="external">点这里的 js/trace/trace.js</a>。程序主要使用了两次setTimeout()来完成动态显示功能。这篇博文把效果拆分成了几个部分分别来讲解，这样便于理解各部分的实现，但是对整个实现的思路可能会表述不够清楚，对着全部代码看一下应该还是比较容易理解的~</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -325,7 +222,7 @@ function delayMove(){
 	<p class="asidetitle">分类</p>
 		<ul>
 		
-			<li><a href="/categories/总结/" title="总结">总结<sup>1</sup></a></li>
+			<li><a href="/categories/总结/" title="总结">总结<sup>2</sup></a></li>
 		
 			<li><a href="/categories/教程/" title="教程">教程<sup>2</sup></a></li>
 		
@@ -338,7 +235,7 @@ function delayMove(){
 	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
-			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>2</sup></a></li>
+			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>3</sup></a></li>
 		
 			<li><a href="/tags/github/" title="github">github<sup>1</sup></a></li>
 		
@@ -347,6 +244,8 @@ function delayMove(){
 			<li><a href="/tags/变量提升/" title="变量提升">变量提升<sup>1</sup></a></li>
 		
 			<li><a href="/tags/百度地图/" title="百度地图">百度地图<sup>1</sup></a></li>
+		
+			<li><a href="/tags/闭包/" title="闭包">闭包<sup>1</sup></a></li>
 		
 		</ul>
 </div>

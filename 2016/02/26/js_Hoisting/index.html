@@ -14,10 +14,7 @@
     
     <meta name="description" content="变量提升的定义JS中的所谓的“变量提升”是指：函数声明和变量声明总是会被解释器悄悄“提升”到方法体最顶部。下面我们用两个例子来理解这句话。
 例1 理解变量声明提升首先，猜一猜这段程序的结果是什么？
-{JavaScript}
-var foo=1;
-function bar(){
-    if(!foo">
+123456789var foo=1;function bar()&amp;#123;	if(!foo)&amp;#1">
     
     
     
@@ -88,7 +85,7 @@ function bar(){
     </p>
   <p class="article-time">
     <time datetime="2016-02-26T14:01:48.000Z" itemprop="datePublished">2016-02-26</time>
-    更新日期:<time datetime="2016-02-28T15:55:17.474Z" itemprop="dateModified">2016-02-28</time>
+    更新日期:<time datetime="2016-03-06T07:52:47.210Z" itemprop="dateModified">2016-03-06</time>
     
   </p>
 </header>
@@ -97,149 +94,27 @@ function bar(){
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#u53D8_u91CF_u63D0_u5347_u7684_u5B9A_u4E49"><span class="toc-number">1.</span> <span class="toc-text">变量提升的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u4F8B1__u7406_u89E3_u53D8_u91CF_u58F0_u660E_u63D0_u5347"><span class="toc-number">2.</span> <span class="toc-text">例1 理解变量声明提升</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u4F8B2__u7406_u89E3_u51FD_u6570_u58F0_u660E_u63D0_u5347"><span class="toc-number">3.</span> <span class="toc-text">例2 理解函数声明提升</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u53E6_u4E00_u4E2A_u95EE_u9898"><span class="toc-number">4.</span> <span class="toc-text">另一个问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u603B_u7ED3"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#u53D8_u91CF_u63D0_u5347_u7684_u5B9A_u4E49"><span class="toc-number">1.</span> <span class="toc-text">变量提升的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u4F8B1__u7406_u89E3_u53D8_u91CF_u58F0_u660E_u63D0_u5347"><span class="toc-number">2.</span> <span class="toc-text">例1 理解变量声明提升</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u4F8B2__u7406_u89E3_u51FD_u6570_u58F0_u660E_u63D0_u5347"><span class="toc-number">3.</span> <span class="toc-text">例2 理解函数声明提升</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u603B_u7ED3"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
 		</div>
 		
 		<h2 id="u53D8_u91CF_u63D0_u5347_u7684_u5B9A_u4E49"><a href="#u53D8_u91CF_u63D0_u5347_u7684_u5B9A_u4E49" class="headerlink" title="变量提升的定义"></a>变量提升的定义</h2><p>JS中的所谓的“变量提升”是指：函数声明和变量声明总是会被解释器悄悄“提升”到方法体最顶部。下面我们用两个例子来理解这句话。</p>
 <h2 id="u4F8B1__u7406_u89E3_u53D8_u91CF_u58F0_u660E_u63D0_u5347"><a href="#u4F8B1__u7406_u89E3_u53D8_u91CF_u58F0_u660E_u63D0_u5347" class="headerlink" title="例1 理解变量声明提升"></a>例1 理解变量声明提升</h2><p>首先，猜一猜这段程序的结果是什么？</p>
-<pre><code>{JavaScript}
-var foo=1;
-function bar(){
-    if(!foo){
-        var foo=10;
-    }
-    alert(foo);
-}
-bar();
-var foo=1;
-</code></pre><p>答案是10。你一定觉得奇怪<code>foo</code>应该等于1不会if判断条件根本不会成立啊。实际上，如第一部分所说，变量<code>foo</code>被提升到了<code>bar()</code>函数最顶部。我们来看下面这段程序：</p>
-<pre><code>function bar(){
-    console.log(foo)
-    if(!foo){
-        var foo=10;
-        console.log(foo)
-    }
-    console.log(foo)
-    alert(foo);
-}
-bar();
-</code></pre><p>结果是 undefined 10 10，说明当在函数内使用 <strong>var</strong> 定义变量的时候，这个变量的声明被提升到了bar() 函数的最开始。所以这个例子等同于</p>
-<pre><code>var foo=1;
-function bar(){
-    var foo；//定义局部变量foo
-    if(!foo){//foo是undefined，所以进入if语句内部
-        foo=10;
-    }
-    alert(foo);
-}
-bar();//结果是10
-</code></pre><p>现在你可以理解为什么会有上面的结果了吧~这里是否定义全局变量foo并没有影响。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo=<span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(!foo)&#123;</span><br><span class="line">		<span class="keyword">var</span> foo=<span class="number">10</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	alert(foo);</span><br><span class="line">&#125;</span><br><span class="line">bar();</span><br><span class="line"><span class="keyword">var</span> foo=<span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>答案是10。你一定觉得奇怪<code>foo</code>应该等于1不会if判断条件根本不会成立啊。实际上，如第一部分所说，变量<code>foo</code>被提升到了<code>bar()</code>函数最顶部。我们来看下面这段程序：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(foo)</span><br><span class="line">	<span class="keyword">if</span>(!foo)&#123;</span><br><span class="line">		<span class="keyword">var</span> foo=<span class="number">10</span>;</span><br><span class="line">		<span class="built_in">console</span>.log(foo)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">console</span>.log(foo)</span><br><span class="line">	alert(foo);</span><br><span class="line">&#125;</span><br><span class="line">bar();</span><br></pre></td></tr></table></figure>
+<p>结果是 undefined 10 10，说明当在函数内使用 <strong>var</strong> 定义变量的时候，这个变量的声明被提升到了bar() 函数的最开始。所以这个例子等同于</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo=<span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> foo；<span class="comment">//定义局部变量foo</span></span><br><span class="line">	<span class="keyword">if</span>(!foo)&#123;<span class="comment">//foo是undefined，所以进入if语句内部</span></span><br><span class="line">		foo=<span class="number">10</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	alert(foo);</span><br><span class="line">&#125;</span><br><span class="line">bar();<span class="comment">//结果是10</span></span><br></pre></td></tr></table></figure>
+<p>现在你可以理解为什么会有上面的结果了吧~这里是否定义全局变量foo并没有影响。</p>
 <p>那么，如果第一个例子bar函数内部的<code>var foo=10;</code>改为<code>foo=10</code>，结果会怎么样呢？这时，变量就不再提升了。结果就变成了1，因为没有用var声明，变量不再提升。所以<code>if(!foo)</code>这句的时候会到函数外寻找定义的全局变量foo，结果是<strong>1</strong>，就不进入if内。此时，如果没有定义全局变量foo，就会报错了。也就是，<strong>只有在有var声明的时候变量才会被提升到方法体最顶部。</strong></p>
 <h2 id="u4F8B2__u7406_u89E3_u51FD_u6570_u58F0_u660E_u63D0_u5347"><a href="#u4F8B2__u7406_u89E3_u51FD_u6570_u58F0_u660E_u63D0_u5347" class="headerlink" title="例2 理解函数声明提升"></a>例2 理解函数声明提升</h2><p>我们再来看第二个例子：</p>
-<pre><code>var a=1;
-function b(){
-    a=10;
-    return;
-    function a(){}
-}
-b();
-alert(a);
-</code></pre><p>结果竟然是1.你一定会想：“为什么呢？明明函数内改变了全局变量a的值啊！”那么我们来看下面这段程序的结果：</p>
-<pre><code>var a=1;
-function b(){
-    console.log(a)
-    a=10;
-    return;    
-    function a(){}
-}
-b();
-alert(a);
-</code></pre><p>结果是<code>function a(){}</code>。这里也就是说a()函数被提升到前面去了。b()的定义相当于：</p>
-<pre><code>function b(){
-    function a(){}//定义局部变量a
-    a=10;
-    return;        
-}
-</code></pre><p>也就是说因为a()函数被提升到b()函数最开头，所以相当于定义了一个局部变量a，也就是让a=10，是对局部变量赋值，所以不会影响到全局变量a的值，最终结果是1.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a=<span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">b</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	a=<span class="number">10</span>;</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line">b();</span><br><span class="line">alert(a);</span><br></pre></td></tr></table></figure>
+<p>结果竟然是1.你一定会想：“为什么呢？明明函数内改变了全局变量a的值啊！”那么我们来看下面这段程序的结果：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a=<span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">b</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(a)</span><br><span class="line">	a=<span class="number">10</span>;</span><br><span class="line">	<span class="keyword">return</span>;	</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line">b();</span><br><span class="line">alert(a);</span><br></pre></td></tr></table></figure>
+<p>结果是<code>function a(){}</code>。这里也就是说a()函数被提升到前面去了。b()的定义相当于：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">b</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>)</span>&#123;&#125;<span class="comment">//定义局部变量a</span></span><br><span class="line">	a=<span class="number">10</span>;</span><br><span class="line">	<span class="keyword">return</span>;		</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也就是说因为a()函数被提升到b()函数最开头，所以相当于定义了一个局部变量a，也就是让a=10，是对局部变量赋值，所以不会影响到全局变量a的值，最终结果是1.</p>
 <p>现在来复习一下我们例1所讲知识：如果例2这里不是用<code>function a(){}</code>，而是改为<code>var a</code>呢？如果把var 也去掉改为<code>a</code>呢？聪明的你应该已经想到了答案：第一问中console.log()的结果变成了 <code>undefined</code>，而alert结果也是1；第二问中console.log()的结果就变成了 <code>1</code>，而alert结果变成了10.如果你还不懂为什么，再复习一下例1吧！</p>
 <p>这里，还有注意一点，变量提升的时候，只是声明提升了而赋值并没有被提升。函数提升的时候，则要看函数定义方式，如果是函数声明<code>var foo=function(){}</code>这时候只有foo的声明会提升，也就是最开始只有<code>var foo;</code>,它指向的函数体并不会提升（这时候foo可以看成是一个变量提升）；如果是函数表达式<code>function foo(){}</code>此时函数体会和函数式的声明一起提升。</p>
-<h2 id="u53E6_u4E00_u4E2A_u95EE_u9898"><a href="#u53E6_u4E00_u4E2A_u95EE_u9898" class="headerlink" title="另一个问题"></a>另一个问题</h2><p>在群里看到这样一个问题：</p>
-<pre><code>var arr=[1,2,3,4,5];
-var arr2=[];
-for (var i=0;i&lt;arr.length ;i++ )
-{ 
-    arr2.push(function(){alert(i)});
-}
-
-arr2[1]();
-</code></pre><p>输出结果会是什么呢？<br>最后的结果是5.为什么会这样呢？我们来看下面这个程序</p>
-<pre><code>var arr=[1,2,3,4,5];
-var arr2=[];
-for (var i=0;i&lt;arr.length ;i++ )
-{
-    arr2.push(function(){alert(i)});
-    console.log(i,arr2[i]);
-}
-arr2[1]();
-</code></pre><p>结果是</p>
-<pre><code>0 function(){alert(i)}
-1 function(){alert(i)}
-2 function(){alert(i)}
-3 function(){alert(i)}
-4 function(){alert(i)}
-</code></pre><p>也就是说，arr2[]中存放了5个<code>function(){alert(i)}</code>，而不是i分别赋值了0~4的形式。</p>
-<p>我本来理解的是，<code>arr2[1]();</code>这句执行的时候就相当于执行<code>alert(i)</code>,因为最后i是全局变量，它的值是5，所以最后出来是5.但是我把for循环放到函数里，i变成局部变量：</p>
-<pre><code>var arr=[1,2,3,4,5];
-var arr2=[];
-function b(){
-    for (var i=0;i&lt;arr.length ;i++ )
-    {    
-        arr2.push(function(){alert(i)});
-        console.log(i,arr2[i]);
-    }
-
-}
-b();
-arr2[1]();
-</code></pre><p>结果竟然和上面一样！并没有因为在外部没有定义i而有任何影响！于是我改成了下面这样：</p>
-<pre><code>var arr=[1,2,3,4,5];
-var arr2=[];
-function b(){
-    for (var i=0;i&lt;5 ;i++ )
-    {    
-        arr2.push(function(){alert(i)});
-        arr2[i]();
-    }
-    arr2[1]();
-}
-b();
-</code></pre><p>结果是alert了0,1,2,3,4,5.也就是说每次<code>arr2[i]()</code>这个函数执行的时候，都会把i现在的值带入，我改成<code>arr2[0]()</code>也是一样的结果。所以我认为是这个<code>arr2[0]</code>存的是<code>function(){alert(i)}</code>，其中i是赋到整个作用域结束的时候的值。下面这段程序的结果验证了我的想法：</p>
-<pre><code>var arr=[1,2,3,4,5];
-var arr2=[];
-function b(){
-    for (var i=0;i&lt;arr.length ;i++ )
-    {    
-        arr2.push(function(){alert(i)});
-        console.log(i,arr2[i]);
-    }
-    i=10;
-}
-b();
-arr2[1]();
-</code></pre><p>最后的结果是10.</p>
-<p>为什么会这样呢？我理解的应该也是变量提升的原因。加了b()函数的程序可以等价与下面的形式：</p>
-<pre><code>var arr=[1,2,3,4,5];
-var arr2=[];
-function b(){
-    var i；
-    function(){alert(i)}；
-    for (i=0;i&lt;5 ;i++ )
-    {    
-        arr2.push(function(){alert(i)});
-    }
-}
-b();
-</code></pre><p>每个arr2里面存的是<code>function(){alert(i)}；</code>,而最后局部变量<code>i</code>的值等于5，所以最终给i赋值5.</p>
 <h2 id="u603B_u7ED3"><a href="#u603B_u7ED3" class="headerlink" title="总结"></a>总结</h2><p>相信通过这三个问题，你对作用域和变量提升有了更深的理解~总结有以下几点：</p>
 <ol>
 <li>使用<code>var</code>声明的变量（包括函数）其声明会被提升到方法体最顶部，而赋值不会被提升；</li>
@@ -280,6 +155,14 @@ b();
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2016/03/01/closureProblem/" title="一个经典的js涉及闭包的问题">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  一个经典的js涉及闭包的问题</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2016/02/20/mapShow/"  title="如何在百度地图实现简单的迁徙效果">
@@ -304,7 +187,7 @@ b();
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#u53D8_u91CF_u63D0_u5347_u7684_u5B9A_u4E49"><span class="toc-number">1.</span> <span class="toc-text">变量提升的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u4F8B1__u7406_u89E3_u53D8_u91CF_u58F0_u660E_u63D0_u5347"><span class="toc-number">2.</span> <span class="toc-text">例1 理解变量声明提升</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u4F8B2__u7406_u89E3_u51FD_u6570_u58F0_u660E_u63D0_u5347"><span class="toc-number">3.</span> <span class="toc-text">例2 理解函数声明提升</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u53E6_u4E00_u4E2A_u95EE_u9898"><span class="toc-number">4.</span> <span class="toc-text">另一个问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u603B_u7ED3"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#u53D8_u91CF_u63D0_u5347_u7684_u5B9A_u4E49"><span class="toc-number">1.</span> <span class="toc-text">变量提升的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u4F8B1__u7406_u89E3_u53D8_u91CF_u58F0_u660E_u63D0_u5347"><span class="toc-number">2.</span> <span class="toc-text">例1 理解变量声明提升</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u4F8B2__u7406_u89E3_u51FD_u6570_u58F0_u660E_u63D0_u5347"><span class="toc-number">3.</span> <span class="toc-text">例2 理解函数声明提升</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u603B_u7ED3"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
   </div>
 
 <div id="asidepart">
@@ -330,7 +213,7 @@ b();
 	<p class="asidetitle">分类</p>
 		<ul>
 		
-			<li><a href="/categories/总结/" title="总结">总结<sup>1</sup></a></li>
+			<li><a href="/categories/总结/" title="总结">总结<sup>2</sup></a></li>
 		
 			<li><a href="/categories/教程/" title="教程">教程<sup>2</sup></a></li>
 		
@@ -343,7 +226,7 @@ b();
 	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
-			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>2</sup></a></li>
+			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>3</sup></a></li>
 		
 			<li><a href="/tags/github/" title="github">github<sup>1</sup></a></li>
 		
@@ -352,6 +235,8 @@ b();
 			<li><a href="/tags/变量提升/" title="变量提升">变量提升<sup>1</sup></a></li>
 		
 			<li><a href="/tags/百度地图/" title="百度地图">百度地图<sup>1</sup></a></li>
+		
+			<li><a href="/tags/闭包/" title="闭包">闭包<sup>1</sup></a></li>
 		
 		</ul>
 </div>
