@@ -1,0 +1,483 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>JavaScript 中的 this 到底指什么？ | Leaf&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="leafxm">
+    
+    <meta name="description" content="简介  JavaScript 中的 this 到底指什么？这个问题之前我总是晕晕的，终于在认真看了几篇介绍文章了解了~然而感觉这几篇文章的逻辑好像也不是特别清楚，所以自己总结一下啦~
+全局范围的this全局范围内，this等价于window对象。
+1console.log(this === wind">
+    
+    
+    
+    
+    <link rel="alternate" href="atom.xml" title="Leaf&#39;s blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='yxm0530';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Leaf&#39;s blog">Leaf&#39;s blog</a></h1>
+				<a class="blog-motto"></a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+					<li>
+					
+						<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" class="st-default-search-input" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/04/08/js_this/" title="JavaScript 中的 this 到底指什么？" itemprop="url">JavaScript 中的 this 到底指什么？</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yoursite.com" title="leafxm">leafxm</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-04-07T16:00:00.000Z" itemprop="datePublished">2016-04-08</time>
+    更新日期:<time datetime="2016-04-08T13:47:47.541Z" itemprop="dateModified">2016-04-08</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#u5168_u5C40_u8303_u56F4_u7684this"><span class="toc-number">1.</span> <span class="toc-text">全局范围的this</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u51FD_u6570_u4E2D_u7684this"><span class="toc-number">2.</span> <span class="toc-text">函数中的this</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u76F4_u63A5_u8C03_u7528"><span class="toc-number">2.1.</span> <span class="toc-text">直接调用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u88AB_u5BF9_u8C61_u8C03_u7528"><span class="toc-number">2.2.</span> <span class="toc-text">被对象调用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#call_uFF0Capply_u548Cbind"><span class="toc-number">2.2.1.</span> <span class="toc-text">call，apply和bind</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u88AB_u5F53_u6210_u6784_u9020_u51FD_u6570_u8C03_u7528"><span class="toc-number">2.3.</span> <span class="toc-text">被当成构造函数调用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#u539F_u578B_u7684_u7B80_u5355_u539F_u7406_u548C_u5176_u4E2D_u7684this"><span class="toc-number">2.3.1.</span> <span class="toc-text">原型的简单原理和其中的this</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DOM_u4E8B_u4EF6_u5904_u7406_u4E2D_u7684this"><span class="toc-number">3.</span> <span class="toc-text">DOM事件处理中的this</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u603B_u7ED3"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+		</div>
+		
+		<p><strong>简介</strong>  JavaScript 中的 this 到底指什么？这个问题之前我总是晕晕的，终于在认真看了几篇介绍文章了解了~然而感觉这几篇文章的逻辑好像也不是特别清楚，所以自己总结一下啦~</p>
+<h2 id="u5168_u5C40_u8303_u56F4_u7684this"><a href="#u5168_u5C40_u8303_u56F4_u7684this" class="headerlink" title="全局范围的this"></a>全局范围的this</h2><p>全局范围内，this等价于window对象。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="keyword">this</span> === <span class="built_in">window</span>); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<h2 id="u51FD_u6570_u4E2D_u7684this"><a href="#u51FD_u6570_u4E2D_u7684this" class="headerlink" title="函数中的this"></a>函数中的this</h2><p>在函数中定义的this，它的值取决于函数是如何被调用的。下面分为直接调用，被对象调用和被当成构造函数调用三种情况来说明。</p>
+<h3 id="u76F4_u63A5_u8C03_u7528"><a href="#u76F4_u63A5_u8C03_u7528" class="headerlink" title="直接调用"></a>直接调用</h3><p>非严格模式的时候，函数直接调用时，其中的this等价于window对象。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>===<span class="built_in">window</span>); <span class="comment">//true</span></span><br><span class="line">&#125;</span><br><span class="line">test();</span><br></pre></td></tr></table></figure>
+<p>严格模式时，函数中的this为undefined。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="pi">	'use strict'</span></span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>);  <span class="comment">//undefined</span></span><br><span class="line">&#125;</span><br><span class="line">test();</span><br></pre></td></tr></table></figure>
+<p>如果是在函数中嵌套的函数呢？</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	(<span class="function"><span class="keyword">function</span> <span class="title">test2</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="keyword">this</span>===<span class="built_in">window</span>);  <span class="comment">//true</span></span><br><span class="line">	&#125;)();</span><br><span class="line">&#125;</span><br><span class="line">test();</span><br></pre></td></tr></table></figure>
+<p>因为它调用的方式是直接调用，所以并不会有什么差别~</p>
+<h3 id="u88AB_u5BF9_u8C61_u8C03_u7528"><a href="#u88AB_u5BF9_u8C61_u8C03_u7528" class="headerlink" title="被对象调用"></a>被对象调用</h3><p>对象的函数中可以通过this引用对象其他属性，比如</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">	foo: <span class="string">"foo"</span>,</span><br><span class="line">	logFoo: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="keyword">this</span>.foo);  <span class="comment">//foo</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">obj.logFoo();</span><br></pre></td></tr></table></figure>
+<p>这个过程其实相当于：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">	foo: <span class="string">"foo"</span>,&#125;</span><br><span class="line"><span class="keyword">var</span> logFoo=  <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="keyword">this</span>.foo);</span><br><span class="line">	&#125;</span><br><span class="line">logFoo(); <span class="comment">//undefined</span></span><br><span class="line">logFoo.apply(obj) <span class="comment">//foo</span></span><br></pre></td></tr></table></figure>
+<p>也就是在对象中定义的函数<code>logFoo</code>的this指向被改成了该对象。</p>
+<p>但是this只会指向被定义时所在的对象，也就是说，在对象里面再建一个子对象，子对象里的函数不能通过this共享到父对象的变量。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">	foo: <span class="string">"foo"</span>,</span><br><span class="line">	logLog:&#123;</span><br><span class="line">		logFoo:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			<span class="built_in">console</span>.log(<span class="keyword">this</span>.foo); <span class="comment">//undefined</span></span><br><span class="line">		&#125; </span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">obj.logLog.logFoo();</span><br></pre></td></tr></table></figure>
+<p>如果一定要跨对象使用变量，可以直接通过对象引用所需属性，也就是把<code>this.foo</code>改成<code>obj.foo</code>就ok啦~</p>
+<h4 id="call_uFF0Capply_u548Cbind"><a href="#call_uFF0Capply_u548Cbind" class="headerlink" title="call，apply和bind"></a>call，apply和bind</h4><p>在JavaScript中，call、apply和bind 是Function对象自带的三个方法，这三个方法的主要作用是改变函数中的this指向。</p>
+<p>call和apply差别是第二个参数的传参方式不同：<code>call(thisArgs [,args...])</code>，<code>apply(thisArgs[,args[]])</code>。apply的第二个参数必须是一个数组，而call允许传递一个参数列表。值得注意的是，虽然apply接收的是一个参数数组，但在传递给调用函数时，却是以参数列表的形式传递。</p>
+<p>bind和它们的差别：bind不会自动执行对应的函数，可以用于事件绑定中。</p>
+<h3 id="u88AB_u5F53_u6210_u6784_u9020_u51FD_u6570_u8C03_u7528"><a href="#u88AB_u5F53_u6210_u6784_u9020_u51FD_u6570_u8C03_u7528" class="headerlink" title="被当成构造函数调用"></a>被当成构造函数调用</h3><p>我们知道js中的函数都可以被当成构造函数，只要你使用<code>new</code>，首先我们来了解一些使用<code>new</code>操作符调用构造函数的时候到底发生了什么呢？<code>new CO()</code>的时候就是发生了以下四步：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj  =&#123;&#125;;</span><br><span class="line">obj.__proto__ = CO.prototype;</span><br><span class="line">CO.call(obj);</span><br><span class="line"><span class="keyword">return</span> obj;</span><br></pre></td></tr></table></figure>
+<p>注意第三行，改变了构造函数中的this的指向，使它指向了这个新对象。</p>
+<p>所以，现在你应该明白了，函数被当成构造函数调用的时候，其中this的指向了吧~还不明白的话，看下面这个例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = <span class="string">"foo"</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.foo = <span class="string">"change"</span>;</span><br><span class="line">&#125; </span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">this</span>.foo); <span class="comment">//foo</span></span><br><span class="line"><span class="keyword">var</span> obj = <span class="keyword">new</span> Foo();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">this</span>.foo); <span class="comment">//foo</span></span><br><span class="line"><span class="built_in">console</span>.log(obj.foo); <span class="comment">//change</span></span><br></pre></td></tr></table></figure>
+<p>这个时候Foo()函数中的this被绑定到新建的对象上，而不再是window了~</p>
+<h4 id="u539F_u578B_u7684_u7B80_u5355_u539F_u7406_u548C_u5176_u4E2D_u7684this"><a href="#u539F_u578B_u7684_u7B80_u5355_u539F_u7406_u548C_u5176_u4E2D_u7684this" class="headerlink" title="原型的简单原理和其中的this"></a>原型的简单原理和其中的this</h4><p>在上面的new四步骤中，第二步是原型赋值，简单说，原型是一种特殊的属性，当多个对象共享同一个构造函数的时候，这个属性也可以被多个对象共享，这些对象里有个<code>__proto__</code>指针，都指向该构造函数的prototype原型的存储空间。</p>
+<p>在构造函数中有用this定义的和原型同名的属性，会隐藏原型中与之同名的属性，也就是说那么构造函数中的this会先在构造函数中寻找是否有用this定义该变量，没有相应变量则会在原型中寻找：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Thing</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"> <span class="keyword">this</span>.foo=<span class="string">"foo"</span>;</span><br><span class="line">&#125;</span><br><span class="line">Thing.prototype.foo=<span class="string">"bar"</span>;</span><br><span class="line">Thing.prototype.logFoo = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">this</span>.foo);&#125;</span><br><span class="line"><span class="keyword">var</span> thing = <span class="keyword">new</span> Thing();</span><br><span class="line">thing.logFoo(); <span class="comment">//foo</span></span><br></pre></td></tr></table></figure>
+<p>而下面这段程序有不一样的结果。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Thing</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"> <span class="comment">//this.foo="foo"; </span></span><br><span class="line">&#125;</span><br><span class="line">Thing.prototype.foo=<span class="string">"bar"</span>;</span><br><span class="line">Thing.prototype.logFoo = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">this</span>.foo);&#125;</span><br><span class="line"><span class="keyword">var</span> thing = <span class="keyword">new</span> Thing();</span><br><span class="line">thing.logFoo(); <span class="comment">//bar</span></span><br></pre></td></tr></table></figure>
+<p>并且在构造函数创建的实例里直接添加属性时，相当于在实例中使用<code>this</code>定义了一个属性，也会隐藏原型中与之同名的属性，但是不会改变prototype中的属性，通过<code>delete</code>可以删除实例中的属性（包括原来在构造函数中定义的也可以删除）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Thing</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	 <span class="comment">//this.foo="foo";</span></span><br><span class="line">	&#125;</span><br><span class="line">	Thing.prototype.foo=<span class="string">"bar"</span>;</span><br><span class="line">	Thing.prototype.logFoo = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>.foo);&#125; </span><br><span class="line">	<span class="keyword">var</span> thing = <span class="keyword">new</span> Thing();</span><br><span class="line">	thing.logFoo(); <span class="comment">//bar</span></span><br><span class="line">	thing.foo = <span class="string">"foo"</span>;</span><br><span class="line">	thing.logFoo(); <span class="comment">//foo</span></span><br><span class="line">	<span class="keyword">delete</span> thing.foo;</span><br><span class="line">	thing.logFoo(); <span class="comment">//bar</span></span><br></pre></td></tr></table></figure>
+<p>如果使用原型定义一个函数方法，那么其中的this如何指向呢？</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Thing</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	 <span class="keyword">this</span>.foo=<span class="string">"foo"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	Thing.prototype.foo=<span class="string">"bar"</span>;</span><br><span class="line">	Thing.prototype.setFoo = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.foo = <span class="string">"change"</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">var</span> thing = <span class="keyword">new</span> Thing();</span><br><span class="line">	<span class="built_in">console</span>.log(thing.foo); <span class="comment">//foo</span></span><br><span class="line">	thing.setFoo();</span><br><span class="line">	<span class="built_in">console</span>.log(thing.foo); <span class="comment">//change</span></span><br></pre></td></tr></table></figure>
+<p>其实，这里的效果与<code>setFoo</code>函数直接被<code>thing</code>对象调用是一样的~</p>
+<p>然而，当把一个原型定义的方法当做一个值传递一个函数的时候，this又会变成什么样呢？</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Thing</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"> <span class="keyword">this</span>.foo=<span class="string">"foo"</span>;</span><br><span class="line">&#125;</span><br><span class="line">Thing.prototype.foo=<span class="string">"bar"</span>;</span><br><span class="line">Thing.prototype.setFoo = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.foo = <span class="string">"change"</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> thing = <span class="keyword">new</span> Thing();</span><br><span class="line"><span class="built_in">console</span>.log(thing.foo); <span class="comment">//foo</span></span><br><span class="line"><span class="keyword">var</span> set = thing.setFoo;</span><br><span class="line">set();</span><br><span class="line"><span class="built_in">console</span>.log(thing.foo); <span class="comment">//foo</span></span><br></pre></td></tr></table></figure>
+<p>其实这时候，就是相当于给<code>set</code>函数定义了函数体，<code>set()</code>相当于函数直接调用。<br>总结就是，构造函数的this可以访问原型，并且原型定义的函数可以对this进行修改。原型总之又是一个可以再写一篇的话题，个人认为如果只关心this的话而对原型还不太了解的话，可以暂时忽略以上内容。</p>
+<h2 id="DOM_u4E8B_u4EF6_u5904_u7406_u4E2D_u7684this"><a href="#DOM_u4E8B_u4EF6_u5904_u7406_u4E2D_u7684this" class="headerlink" title="DOM事件处理中的this"></a>DOM事件处理中的this</h2><p>在一个HTML DOM事件处理程序里面，this指向这个处理程序被所绑定到的HTML DOM节点。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>= "<span class="attribute">button</span>" <span class="attribute">id</span>=<span class="value">"btn"</span> <span class="attribute">value</span>=<span class="value">"click me"</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript"></span><br><span class="line"> 	<span class="keyword">var</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">"btn"</span>);</span><br><span class="line">	btn.addEventListener(<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="built_in">console</span>.log(<span class="keyword">this</span>);&#125;) </span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>结果是<code>&lt;input type= &quot;button&quot; id=&quot;btn&quot; value=&quot;click me&quot;/&gt;</code>。</p>
+<h2 id="u603B_u7ED3"><a href="#u603B_u7ED3" class="headerlink" title="总结"></a>总结</h2><p>1.全局范围：this等价于window对象。</p>
+<p>2.函数中的this</p>
+<p>2.1 直接调用时：非严格模式时this指代全局范围的this，严格模式时this为undefined。</p>
+<p>2.3 被对象调用：对象的函数中可以通过this引用对象其他属性，但是必须是有相同直接父元素的属性才能通过this共享变量。</p>
+<p>2.4 当构造函数调用：this指向实例。</p>
+<p>3.DOM事件中的this：this始终指向这个处理程序所被绑定到的HTML DOM 节点。</p>
+<p>主要参考文章：</p>
+<p><a href="https://segmentfault.com/a/1190000002640298" target="_blank" rel="external">JavaScript中的this陷阱的最全收集–没有之一</a></p>
+<p><a href="http://www.cnblogs.com/onepixel/p/5143863.html" target="_blank" rel="external">浅谈 call apply 与 bind</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/JavaScript/">JavaScript</a><a href="/tags/this/">this</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/总结/">总结</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yoursite.com/2016/04/08/js_this/" data-title="JavaScript 中的 this 到底指什么？ | Leaf&#39;s blog" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/03/01/closureProblem/"  title="一个经典的js涉及闭包的问题">
+ <strong>NEXT:</strong><br/> 
+ <span>一个经典的js涉及闭包的问题
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="JavaScript 中的 this 到底指什么？" data-thread-key="js_this" data-author-key="leafxm" data-url="http://yoursite.com/post/js_this"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#u5168_u5C40_u8303_u56F4_u7684this"><span class="toc-number">1.</span> <span class="toc-text">全局范围的this</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u51FD_u6570_u4E2D_u7684this"><span class="toc-number">2.</span> <span class="toc-text">函数中的this</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u76F4_u63A5_u8C03_u7528"><span class="toc-number">2.1.</span> <span class="toc-text">直接调用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u88AB_u5BF9_u8C61_u8C03_u7528"><span class="toc-number">2.2.</span> <span class="toc-text">被对象调用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#call_uFF0Capply_u548Cbind"><span class="toc-number">2.2.1.</span> <span class="toc-text">call，apply和bind</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u88AB_u5F53_u6210_u6784_u9020_u51FD_u6570_u8C03_u7528"><span class="toc-number">2.3.</span> <span class="toc-text">被当成构造函数调用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#u539F_u578B_u7684_u7B80_u5355_u539F_u7406_u548C_u5176_u4E2D_u7684this"><span class="toc-number">2.3.1.</span> <span class="toc-text">原型的简单原理和其中的this</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DOM_u4E8B_u4EF6_u5904_u7406_u4E2D_u7684this"><span class="toc-number">3.</span> <span class="toc-text">DOM事件处理中的this</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u603B_u7ED3"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo" ></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		
+		
+		<a href="https://github.com/leafxm" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/总结/" title="总结">总结<sup>3</sup></a></li>
+		
+			<li><a href="/categories/教程/" title="教程">教程<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>4</sup></a></li>
+		
+			<li><a href="/tags/github/" title="github">github<sup>1</sup></a></li>
+		
+			<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+		
+			<li><a href="/tags/this/" title="this">this<sup>1</sup></a></li>
+		
+			<li><a href="/tags/变量提升/" title="变量提升">变量提升<sup>1</sup></a></li>
+		
+			<li><a href="/tags/百度地图/" title="百度地图">百度地图<sup>1</sup></a></li>
+		
+			<li><a href="/tags/闭包/" title="闭包">闭包<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2016 
+		
+		<a href="http://yoursite.com" target="_blank" title="leafxm">leafxm</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+		<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+  
+  _st('install','VJyggzynWWh5kw3F7Gzq','2.0.0');
+</script>
+	    </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"null"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '4';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+
+  </body>
+</html>
+
