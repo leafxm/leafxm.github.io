@@ -7,13 +7,18 @@
   <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
 <meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
   
-    <title>JavaScript中的事件代理和委托 | Leaf&#39;s blog</title>
+    <title>Leaf&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="leafxm">
     
-    <meta name="description" content="简介 总结JS中的事件代理和委托的知识。
-是什么？首先我们看这个名字“事件委托和代理”，它的主体自然是“事件”，也就是说这是和事件相关的一种方法，而“委托和代理”则是英文delegate的翻译，结合来看，表示的是元素A的事件，但是元素A没有处理这个事件的方法，而把这个处理过程委托给元素B，也就是说在">
+    <meta name="description" content="title: 关于arguments和thisdate: 2016-03-24tags:
+
+JavaScript
+this
+
+categories: [问题]
+问题1234567891011121314var length = 10;function fn()&amp;#123;	console.log(t">
     
     
     
@@ -76,15 +81,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/05/07/js_delegate/" title="JavaScript中的事件代理和委托" itemprop="url">JavaScript中的事件代理和委托</a>
+      <a href="/2016/08/04/js_this_arg/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="leafxm">leafxm</a>
     </p>
   <p class="article-time">
-    <time datetime="2016-05-07T05:49:12.000Z" itemprop="datePublished">2016-05-07</time>
-    更新日期:<time datetime="2016-05-07T15:32:28.540Z" itemprop="dateModified">2016-05-07</time>
+    <time datetime="2016-08-03T16:13:55.319Z" itemprop="datePublished">2016-08-04</time>
+    更新日期:<time datetime="2016-08-03T16:13:55.319Z" itemprop="dateModified">2016-08-04</time>
     
   </p>
 </header>
@@ -93,48 +98,30 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#u662F_u4EC0_u4E48_uFF1F"><span class="toc-number">1.</span> <span class="toc-text">是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u4E3A_u4EC0_u4E48_uFF1F"><span class="toc-number">2.</span> <span class="toc-text">为什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u4EC0_u4E48_u7528_uFF1F"><span class="toc-number">3.</span> <span class="toc-text">什么用？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u600E_u4E48_u529E_uFF1F"><span class="toc-number">4.</span> <span class="toc-text">怎么办？</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#u95EE_u9898"><span class="toc-number">1.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5206_u6790"><span class="toc-number">2.</span> <span class="toc-text">分析</span></a></li></ol>
 		</div>
 		
-		<p><strong>简介</strong> 总结JS中的事件代理和委托的知识。</p>
-<h2 id="u662F_u4EC0_u4E48_uFF1F"><a href="#u662F_u4EC0_u4E48_uFF1F" class="headerlink" title="是什么？"></a>是什么？</h2><p>首先我们看这个名字“事件委托和代理”，它的主体自然是“事件”，也就是说这是和事件相关的一种方法，而“委托和代理”则是英文delegate的翻译，结合来看，表示的是元素A的事件，但是元素A没有处理这个事件的方法，而把这个处理过程委托给元素B，也就是说在元素B对这个事件的处理函数内进行处理。就像杜鹃鸟下了蛋，而把蛋委托给其他鸟孵化一样（奇怪的联想……）。但是，在这里，元素A并不是像杜鹃一样随便给一个鸟孵化，而是元素A和元素B是有一定关系的。什么关系呢？这就涉及到事件的“冒泡”性质了。</p>
-<h2 id="u4E3A_u4EC0_u4E48_uFF1F"><a href="#u4E3A_u4EC0_u4E48_uFF1F" class="headerlink" title="为什么？"></a>为什么？</h2><p>当元素A上的一个DOM事件被触发的时候，它并不是只在元素A上触发一次，而是会经历三个不同的阶段：捕获阶段、目标阶段、冒泡阶段。如下图，捕获阶段事件从文档的根节点流向目标对象，目标阶段是找到这个最初触发事件的元素A，而冒泡阶段则是从元素A再回溯到文档的根节点。（图片来自W3C）</p>
-<p><img src="https://sfault-image.b0.upaiyun.com/12/1b/121ba0d37798d6d23227d2dd49d0e58c_articlex" alt="事件捕获和冒泡"></p>
-<p>形象一点说，就像有一个几进的大院子，你在门外听到有人叫你（事件触发），你就从大门走进去看谁在叫你，门厅没人叫你，你就继续往前走，进了第二个门遇到一个人，说正好要找你做一件事（捕获阶段的事件处理）但是他不是叫你的人，你又往前走，直到找到叫你的人（目标阶段），但是他没说叫你干嘛（没有事件处理程序），你就往回走（事件冒泡）。</p>
-<p>那么事件委托是什么呢？就是你在往回走的时候，遇到了一个人B，说那个叫你的人是A吧？你说对，他就给你一些A的事情处理了~也就是A的处理过程委托给B了~</p>
-<p>用正常的语言说，就是事件被触发后会从根节点往下直到找到真正触发它的元素（捕获过程），这个过程如果有节点有该事件的处理函数（用addEventListener进行事件监听时，将最后一个参数设置为true来规定是捕获阶段触发），也会被执行，找到真正触发它的元素，会对这个元素有个标记就是e.target(在 IE6-8 中，是e.srcElement),然后往上冒泡，遇到有节点有该事件的处理函数，而且在这个处理函数里，可以对e.target进行判定，如果它符合一定条件，就对它进行处理，这就是事件代理和委托了~</p>
-<p>所以元素A和元素B是什么关系呢？因为冒泡是往上冒，所以在DOM树上，元素B必须是元素A上面的元素，也就是祖先元素。</p>
-<p>关于JS中的事件处理，可参看<a href="http://www.cnblogs.com/craftsman-gao/p/4937700.html" target="_blank" rel="external">JavaScript之事件处理详解</a>.</p>
-<h2 id="u4EC0_u4E48_u7528_uFF1F"><a href="#u4EC0_u4E48_u7528_uFF1F" class="headerlink" title="什么用？"></a>什么用？</h2><p>上面讲了那么多，你一定开始迷惑，事件代理和委托到底有什么用啊！！干嘛要那么麻烦啊！！这里，你首先要知道两点：</p>
-<ol>
-<li>当你给页面中大量元素绑定了事件的时候，会严重影响到性能。</li>
-<li>当你给某种元素绑定事件的时候，事件只会绑定到页面已有元素上，而在绑定事件后新生成的同类元素，你需要重新绑定事件。</li>
-</ol>
-<p>这样，你就知道事件代理和委托有什么用了吧？首先，它可以只给祖先元素绑定一个事件，就可以对子元素都进行相应的处理，一个比较典型的用例就是table，当下面表格格子很多的时候，把事件代理到table元素比每个小格子绑定事件性能要好很多；其次，使用事件代理和委托，可以不用每次都给新生成的元素绑定事件了，只用在事件处理函数中判定一下新生成的元素是否符合条件，就可以对它进行处理了~</p>
-<h2 id="u600E_u4E48_u529E_uFF1F"><a href="#u600E_u4E48_u529E_uFF1F" class="headerlink" title="怎么办？"></a>怎么办？</h2><p>讲了这么多，你一定很好奇，事件代理和委托的程序到底长什么样吧。举个例子吧，如果HTML里是这样的列表:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">id</span>=<span class="value">"parent-list"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">li</span>&gt;</span>Item 1<span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">li</span>&gt;</span>Item 2<span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">li</span>&gt;</span>Item 3<span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">li</span>&gt;</span>Item 4<span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">li</span>&gt;</span>Item 5<span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">li</span>&gt;</span>Item 6<span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>而我们想获得点击的列表的内容时，如果要考虑兼容IE6~IE8的话，程序应该长这样：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ul =<span class="built_in">document</span>.getElementsByTagName(<span class="string">"ul"</span>)[<span class="number">0</span>];</span><br><span class="line">ul.onclick = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">   <span class="comment">//兼容IE</span></span><br><span class="line">    event = event || <span class="built_in">window</span>.event;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//IE使用srcElement，这里获取目标元素</span></span><br><span class="line">    <span class="keyword">var</span> target = event.target || event.srcElement;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//对目标元素进行判定</span></span><br><span class="line">    <span class="keyword">if</span>(target.tagName.toLowerCase()==<span class="string">"li"</span>)&#123;</span><br><span class="line">		alert(target.innerHTML)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+		<p>title: 关于arguments和this<br>date: 2016-03-24<br>tags:</p>
+<ul>
+<li>JavaScript</li>
+<li>this</li>
+</ul>
+<p>categories: [问题]</p>
+<h2 id="u95EE_u9898"><a href="#u95EE_u9898" class="headerlink" title="问题"></a>问题</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> length = <span class="number">10</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>.length);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj=&#123;</span><br><span class="line">	length:<span class="number">5</span>,</span><br><span class="line">	method:<span class="function"><span class="keyword">function</span>(<span class="params">fn,a</span>)</span>&#123;</span><br><span class="line">		fn();</span><br><span class="line">		<span class="built_in">arguments</span>[<span class="number">0</span>]();</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="keyword">this</span>.length);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">obj.method(fn,<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>这样的结果是10 2 5.</p>
+<h2 id="u5206_u6790"><a href="#u5206_u6790" class="headerlink" title="分析"></a>分析</h2><p>这道题目主要考察this的指向问题。<code>obj.method(fn,1)</code>执行时，首先执行fn()，这时候fn是直接执行的，this指向window,所以结果是10。</p>
+<p>然后执行<code>arguments[0]()</code>，arguments[0]和fn函数指向同一段内存空间，但是但是，这时候this就不那么单纯啦，此时相当于<code>fn.call(arguments)</code>,this指向了arguments类数组，它正好也有length属性，就是接收到的参数的个数了，这里接收到两个参数，所以就是2了~</p>
+<p>最后执行<code>console.log(this.length)</code>，这里的this指向obj对象，所以就是5啦，或者使用fn.call(this)也可达到同样效果啦~</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/JavaScript/">JavaScript</a><a href="/tags/事件代理/">事件代理</a>
-  </div>
-
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/总结/">总结</a>
-</div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2016/05/07/js_delegate/" data-title="JavaScript中的事件代理和委托 | Leaf&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yoursite.com/2016/08/04/js_this_arg/" data-title="Leaf&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -144,18 +131,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2016/05/07/css_k/" title="HTML、CSS中的一些基础知识">
+ <a href="/2016/08/04/js_equal/" title="">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  HTML、CSS中的一些基础知识</span>
+  (no title)</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2016/04/21/js_windowObj/"  title="获取JS中自定义全局变量">
+<a href="/2016/08/04/js_closure_loop/"  title="">
  <strong>NEXT:</strong><br/> 
- <span>获取JS中自定义全局变量
+ <span>(no title)
 </span>
 </a>
 </div>
@@ -165,7 +152,7 @@
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="JavaScript中的事件代理和委托" data-thread-key="js_delegate" data-author-key="leafxm" data-url="http://yoursite.com/post/js_delegate"></div>
+	<div class="ds-thread" data-title="" data-thread-key="js_this_arg" data-author-key="leafxm" data-url="http://yoursite.com/post/js_this_arg"></div>
 	
 </section>
 
@@ -175,7 +162,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#u662F_u4EC0_u4E48_uFF1F"><span class="toc-number">1.</span> <span class="toc-text">是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u4E3A_u4EC0_u4E48_uFF1F"><span class="toc-number">2.</span> <span class="toc-text">为什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u4EC0_u4E48_u7528_uFF1F"><span class="toc-number">3.</span> <span class="toc-text">什么用？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u600E_u4E48_u529E_uFF1F"><span class="toc-number">4.</span> <span class="toc-text">怎么办？</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#u95EE_u9898"><span class="toc-number">1.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5206_u6790"><span class="toc-number">2.</span> <span class="toc-text">分析</span></a></li></ol>
   </div>
 
 <div id="asidepart">
