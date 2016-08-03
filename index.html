@@ -75,85 +75,6 @@
 
   <section class="post" itemscope itemprop="blogPost">
   
-    <a href="/2016/08/04/js_func_arg/" title="" itemprop="url">
-  
-      <time datetime="2016-08-03T16:42:25.563Z" itemprop="datePublished">2016-08-04</time>
-    <h1 itemprop="name"></h1>
-    
-     
-           <p itemprop="description" >title: 关于函数传参和变量提升的问题date: 2016-04-27tags:
-
-JavaScript
-
-categories: [问题]
-问题11234567891011var m=1;function add (n)&amp;#123;        return n = n+</p>
-        
-    
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2016/08/04/js_equal/" title="" itemprop="url">
-  
-      <time datetime="2016-08-03T16:33:36.407Z" itemprop="datePublished">2016-08-04</time>
-    <h1 itemprop="name"></h1>
-    
-     
-           <p itemprop="description" >title: 关于arguments和thisdate: 2016-04-05tags:
-
-JavaScript
-
-categories: [问题]
-问题这个问题涉及到连等号的知识~
-1234var a=&amp;#123;n:1&amp;#125;var b = a;a.x = a =&amp;#12</p>
-        
-    
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2016/08/04/js_this_arg/" title="" itemprop="url">
-  
-      <time datetime="2016-08-03T16:13:55.319Z" itemprop="datePublished">2016-08-04</time>
-    <h1 itemprop="name"></h1>
-    
-     
-           <p itemprop="description" >title: 关于arguments和thisdate: 2016-03-24tags:
-
-JavaScript
-this
-
-categories: [问题]
-问题1234567891011121314var length = 10;function fn()&amp;#123;	con</p>
-        
-    
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2016/08/04/js_closure_loop/" title="" itemprop="url">
-  
-      <time datetime="2016-08-03T16:13:52.383Z" itemprop="datePublished">2016-08-04</time>
-    <h1 itemprop="name"></h1>
-    
-     
-           <p itemprop="description" >title: 闭包中的循环date: 2016-05-05tags:
-
-JavaScript
-
-categories: [问题]
-问题我们都知道，闭包会以引用的形式保存所定义作用的变量，这样的话造成循环结果的错误。比如：
-123456789(function()&amp;#123;	va</p>
-        
-    
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
     <a href="/2016/05/08/centerH/" title="水平、垂直居中的方法总结" itemprop="url">
   
       <time datetime="2016-05-08T04:13:36.000Z" itemprop="datePublished">2016-05-08</time>
@@ -194,6 +115,35 @@ text-align 属性规定元素中的文本的水平</p>
      
            <p itemprop="description" >简介 总结JS中的事件代理和委托的知识。
 是什么？首先我们看这个名字“事件委托和代理”，它的主体自然是“事件”，也就是说这是和事件相关的一种方法，而“委托和代理”则是英文delegate的翻译，结合来看，表示的是元素A的事件，但是元素A没有处理这个事件的方法，而把这个处理过程委托</p>
+        
+    
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2016/05/05/js_closure_loop/" title="闭包中的循环" itemprop="url">
+  
+      <time datetime="2016-05-04T16:00:00.000Z" itemprop="datePublished">2016-05-05</time>
+    <h1 itemprop="name">闭包中的循环</h1>
+    
+     
+           <p itemprop="description" >问题我们都知道，闭包会以引用的形式保存所定义作用的变量，这样的话造成循环结果的错误。比如：
+123456789(function()&amp;#123;	var els = document.getElementsByTagName(&#39;li&#39;);	for(var i = 0, len =</p>
+        
+    
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2016/04/27/js_func_arg/" title="关于函数传参和变量提升的问题" itemprop="url">
+  
+      <time datetime="2016-04-26T16:00:00.000Z" itemprop="datePublished">2016-04-27</time>
+    <h1 itemprop="name">关于函数传参和变量提升的问题</h1>
+    
+     
+           <p itemprop="description" >问题11234567891011var m=1;function add (n)&amp;#123;        return n = n+1;&amp;#125;var a =add(m);console.log(a);function add (n)&amp;#123;        return</p>
         
     
   </a>
@@ -249,6 +199,37 @@ ECMAScript，由ECMA-262 定义，提供核心语言功能；
   </a>
 </section>
 
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2016/04/05/js_equal/" title="关于arguments和this" itemprop="url">
+  
+      <time datetime="2016-04-04T16:00:00.000Z" itemprop="datePublished">2016-04-05</time>
+    <h1 itemprop="name">关于arguments和this</h1>
+    
+     
+           <p itemprop="description" >问题这个问题涉及到连等号的知识~
+1234var a=&amp;#123;n:1&amp;#125;var b = a;a.x = a =&amp;#123;n:2&amp;#125;;console.log(a.x);
+结果是 undefined。
+分析首先明确两点，一是等号会从左往右得到每个操作数的引用，二</p>
+        
+    
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2016/03/24/js_this_arg/" title="关于arguments和this" itemprop="url">
+  
+      <time datetime="2016-03-23T16:00:00.000Z" itemprop="datePublished">2016-03-24</time>
+    <h1 itemprop="name">关于arguments和this</h1>
+    
+     
+           <p itemprop="description" >问题1234567891011121314var length = 10;function fn()&amp;#123;	console.log(this.length);&amp;#125;var obj=&amp;#123;	length:5,	method:function(fn,a)&amp;#123;</p>
+        
+    
+  </a>
+</section>
+
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -284,6 +265,8 @@ ECMAScript，由ECMA-262 定义，提供核心语言功能；
 		
 			<li><a href="/categories/教程/" title="教程">教程<sup>2</sup></a></li>
 		
+			<li><a href="/categories/问题/" title="问题">问题<sup>4</sup></a></li>
+		
 		</ul>
 </div>
 
@@ -297,13 +280,13 @@ ECMAScript，由ECMA-262 定义，提供核心语言功能；
 		
 			<li><a href="/tags/HTML/" title="HTML">HTML<sup>1</sup></a></li>
 		
-			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>7</sup></a></li>
+			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>11</sup></a></li>
 		
 			<li><a href="/tags/github/" title="github">github<sup>1</sup></a></li>
 		
 			<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
 		
-			<li><a href="/tags/this/" title="this">this<sup>1</sup></a></li>
+			<li><a href="/tags/this/" title="this">this<sup>2</sup></a></li>
 		
 			<li><a href="/tags/事件代理/" title="事件代理">事件代理<sup>1</sup></a></li>
 		

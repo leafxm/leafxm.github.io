@@ -7,17 +7,12 @@
   <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
 <meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
   
-    <title>Leaf&#39;s blog</title>
+    <title>关于函数传参和变量提升的问题 | Leaf&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="leafxm">
     
-    <meta name="description" content="title: 关于函数传参和变量提升的问题date: 2016-04-27tags:
-
-JavaScript
-
-categories: [问题]
-问题11234567891011var m=1;function add (n)&amp;#123;        return n = n+1;&amp;#125;va">
+    <meta name="description" content="问题11234567891011var m=1;function add (n)&amp;#123;        return n = n+1;&amp;#125;var a =add(m);console.log(a);function add (n)&amp;#123;        return n = n+3;&amp;">
     
     
     
@@ -80,15 +75,15 @@ categories: [问题]
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/08/04/js_func_arg/" title="" itemprop="url"></a>
+      <a href="/2016/04/27/js_func_arg/" title="关于函数传参和变量提升的问题" itemprop="url">关于函数传参和变量提升的问题</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="leafxm">leafxm</a>
     </p>
   <p class="article-time">
-    <time datetime="2016-08-03T16:42:25.563Z" itemprop="datePublished">2016-08-04</time>
-    更新日期:<time datetime="2016-08-03T16:42:25.461Z" itemprop="dateModified">2016-08-04</time>
+    <time datetime="2016-04-26T16:00:00.000Z" itemprop="datePublished">2016-04-27</time>
+    更新日期:<time datetime="2016-08-03T16:51:22.808Z" itemprop="dateModified">2016-08-04</time>
     
   </p>
 </header>
@@ -100,12 +95,7 @@ categories: [问题]
 		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#u95EE_u98981"><span class="toc-number">1.</span> <span class="toc-text">问题1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u95EE_u98982"><span class="toc-number">2.</span> <span class="toc-text">问题2</span></a></li></ol>
 		</div>
 		
-		<p>title: 关于函数传参和变量提升的问题<br>date: 2016-04-27<br>tags:</p>
-<ul>
-<li>JavaScript</li>
-</ul>
-<p>categories: [问题]</p>
-<h2 id="u95EE_u98981"><a href="#u95EE_u98981" class="headerlink" title="问题1"></a>问题1</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> m=<span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span> (<span class="params">n</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> n = n+<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> a =add(m);</span><br><span class="line"><span class="built_in">console</span>.log(a);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span> (<span class="params">n</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> n = n+<span class="number">3</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> b = add(m);</span><br><span class="line"><span class="built_in">console</span>.log(b);</span><br></pre></td></tr></table></figure>
+		<h2 id="u95EE_u98981"><a href="#u95EE_u98981" class="headerlink" title="问题1"></a>问题1</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> m=<span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span> (<span class="params">n</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> n = n+<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> a =add(m);</span><br><span class="line"><span class="built_in">console</span>.log(a);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span> (<span class="params">n</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> n = n+<span class="number">3</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> b = add(m);</span><br><span class="line"><span class="built_in">console</span>.log(b);</span><br></pre></td></tr></table></figure>
 <p>这个问题首先明确变量提升，导致后定义的add函数覆盖之前定义的，所以只用管后定义的那个就好了，其次就是函数的参数是按值传递的，所以参数n的改变根本不会影响到m的改变，所以两次调用add函数的结果是一样的，都是1+3=4.</p>
 <h2 id="u95EE_u98982"><a href="#u95EE_u98982" class="headerlink" title="问题2"></a>问题2</h2><p>如果传递的不是数字，而是变量呢？</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> m=&#123;a :<span class="number">1</span>&#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span> (<span class="params">n</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> n.a = n.a+<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> a =add(m);</span><br><span class="line"><span class="built_in">console</span>.log(a);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span> (<span class="params">n</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> n.a = n.a+<span class="number">3</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> b = add(m);</span><br><span class="line"><span class="built_in">console</span>.log(b);</span><br></pre></td></tr></table></figure>
@@ -114,12 +104,22 @@ categories: [问题]
 	</div>
 		<footer class="article-footer clearfix">
 
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/JavaScript/">JavaScript</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/问题/">问题</a>
+</div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2016/08/04/js_func_arg/" data-title="Leaf&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yoursite.com/2016/04/27/js_func_arg/" data-title="关于函数传参和变量提升的问题 | Leaf&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -128,11 +128,19 @@ categories: [问题]
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2016/05/05/js_closure_loop/" title="闭包中的循环">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  闭包中的循环</span>
+</a>
+</div>
+
 
 <div class="next">
-<a href="/2016/08/04/js_equal/"  title="">
+<a href="/2016/04/21/js_windowObj/"  title="获取JS中自定义全局变量">
  <strong>NEXT:</strong><br/> 
- <span>(no title)
+ <span>获取JS中自定义全局变量
 </span>
 </a>
 </div>
@@ -142,7 +150,7 @@ categories: [问题]
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="" data-thread-key="js_func_arg" data-author-key="leafxm" data-url="http://yoursite.com/post/js_func_arg"></div>
+	<div class="ds-thread" data-title="关于函数传参和变量提升的问题" data-thread-key="js_func_arg" data-author-key="leafxm" data-url="http://yoursite.com/post/js_func_arg"></div>
 	
 </section>
 
@@ -182,6 +190,8 @@ categories: [问题]
 		
 			<li><a href="/categories/教程/" title="教程">教程<sup>2</sup></a></li>
 		
+			<li><a href="/categories/问题/" title="问题">问题<sup>4</sup></a></li>
+		
 		</ul>
 </div>
 
@@ -195,13 +205,13 @@ categories: [问题]
 		
 			<li><a href="/tags/HTML/" title="HTML">HTML<sup>1</sup></a></li>
 		
-			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>7</sup></a></li>
+			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>11</sup></a></li>
 		
 			<li><a href="/tags/github/" title="github">github<sup>1</sup></a></li>
 		
 			<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
 		
-			<li><a href="/tags/this/" title="this">this<sup>1</sup></a></li>
+			<li><a href="/tags/this/" title="this">this<sup>2</sup></a></li>
 		
 			<li><a href="/tags/事件代理/" title="事件代理">事件代理<sup>1</sup></a></li>
 		

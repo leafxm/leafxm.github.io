@@ -7,18 +7,13 @@
   <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
 <meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
   
-    <title>Leaf&#39;s blog</title>
+    <title>闭包中的循环 | Leaf&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="leafxm">
     
-    <meta name="description" content="title: 闭包中的循环date: 2016-05-05tags:
-
-JavaScript
-
-categories: [问题]
-问题我们都知道，闭包会以引用的形式保存所定义作用的变量，这样的话造成循环结果的错误。比如：
-123456789(function()&amp;#123;	var els = do">
+    <meta name="description" content="问题我们都知道，闭包会以引用的形式保存所定义作用的变量，这样的话造成循环结果的错误。比如：
+123456789(function()&amp;#123;	var els = document.getElementsByTagName(&#39;li&#39;);	for(var i = 0, len = els.lengt">
     
     
     
@@ -81,15 +76,15 @@ categories: [问题]
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/08/04/js_closure_loop/" title="" itemprop="url"></a>
+      <a href="/2016/05/05/js_closure_loop/" title="闭包中的循环" itemprop="url">闭包中的循环</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="leafxm">leafxm</a>
     </p>
   <p class="article-time">
-    <time datetime="2016-08-03T16:13:52.383Z" itemprop="datePublished">2016-08-04</time>
-    更新日期:<time datetime="2016-08-03T16:13:52.383Z" itemprop="dateModified">2016-08-04</time>
+    <time datetime="2016-05-04T16:00:00.000Z" itemprop="datePublished">2016-05-05</time>
+    更新日期:<time datetime="2016-08-03T16:51:36.664Z" itemprop="dateModified">2016-08-04</time>
     
   </p>
 </header>
@@ -101,12 +96,7 @@ categories: [问题]
 		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#u95EE_u9898"><span class="toc-number">1.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u4FEE_u6539_u65B9_u6CD5"><span class="toc-number">2.</span> <span class="toc-text">修改方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u65B9_u6CD51"><span class="toc-number">2.1.</span> <span class="toc-text">方法1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u65B9_u6CD52"><span class="toc-number">2.2.</span> <span class="toc-text">方法2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u65B9_u6CD53"><span class="toc-number">2.3.</span> <span class="toc-text">方法3</span></a></li></ol></li></ol>
 		</div>
 		
-		<p>title: 闭包中的循环<br>date: 2016-05-05<br>tags:</p>
-<ul>
-<li>JavaScript</li>
-</ul>
-<p>categories: [问题]</p>
-<h2 id="u95EE_u9898"><a href="#u95EE_u9898" class="headerlink" title="问题"></a>问题</h2><p>我们都知道，闭包会以引用的形式保存所定义作用的变量，这样的话造成循环结果的错误。比如：</p>
+		<h2 id="u95EE_u9898"><a href="#u95EE_u9898" class="headerlink" title="问题"></a>问题</h2><p>我们都知道，闭包会以引用的形式保存所定义作用的变量，这样的话造成循环结果的错误。比如：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> els = <span class="built_in">document</span>.getElementsByTagName(<span class="string">'li'</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>, len = els.length; i &lt; len; i++)&#123;</span><br><span class="line">        <span class="keyword">var</span> el = els[i];</span><br><span class="line">        el.onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                alert(el.innerHTML);</span><br><span class="line">     	&#125;;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
 <p>这样的结果是每个元素点击后出来的都是最后一个元素的innerHTML。这是因为el最后是el[len-1]这个元素。</p>
 <h2 id="u4FEE_u6539_u65B9_u6CD5"><a href="#u4FEE_u6539_u65B9_u6CD5" class="headerlink" title="修改方法"></a>修改方法</h2><h3 id="u65B9_u6CD51"><a href="#u65B9_u6CD51" class="headerlink" title="方法1"></a>方法1</h3><p>将变量的引用el改为this,this在onclick事件中指向绑定事件的节点，这样就是每次的直接获得每次的el了~不过这个方法不够通用~</p>
@@ -118,12 +108,22 @@ categories: [问题]
 	</div>
 		<footer class="article-footer clearfix">
 
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/JavaScript/">JavaScript</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/问题/">问题</a>
+</div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2016/08/04/js_closure_loop/" data-title="Leaf&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yoursite.com/2016/05/05/js_closure_loop/" data-title="闭包中的循环 | Leaf&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -133,18 +133,18 @@ categories: [问题]
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2016/08/04/js_this_arg/" title="">
+ <a href="/2016/05/07/js_delegate/" title="JavaScript中的事件代理和委托">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  (no title)</span>
+  JavaScript中的事件代理和委托</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2016/05/08/centerH/"  title="水平、垂直居中的方法总结">
+<a href="/2016/04/27/js_func_arg/"  title="关于函数传参和变量提升的问题">
  <strong>NEXT:</strong><br/> 
- <span>水平、垂直居中的方法总结
+ <span>关于函数传参和变量提升的问题
 </span>
 </a>
 </div>
@@ -154,7 +154,7 @@ categories: [问题]
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="" data-thread-key="js_closure_loop" data-author-key="leafxm" data-url="http://yoursite.com/post/js_closure_loop"></div>
+	<div class="ds-thread" data-title="闭包中的循环" data-thread-key="js_closure_loop" data-author-key="leafxm" data-url="http://yoursite.com/post/js_closure_loop"></div>
 	
 </section>
 
@@ -194,6 +194,8 @@ categories: [问题]
 		
 			<li><a href="/categories/教程/" title="教程">教程<sup>2</sup></a></li>
 		
+			<li><a href="/categories/问题/" title="问题">问题<sup>4</sup></a></li>
+		
 		</ul>
 </div>
 
@@ -207,13 +209,13 @@ categories: [问题]
 		
 			<li><a href="/tags/HTML/" title="HTML">HTML<sup>1</sup></a></li>
 		
-			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>7</sup></a></li>
+			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>11</sup></a></li>
 		
 			<li><a href="/tags/github/" title="github">github<sup>1</sup></a></li>
 		
 			<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
 		
-			<li><a href="/tags/this/" title="this">this<sup>1</sup></a></li>
+			<li><a href="/tags/this/" title="this">this<sup>2</sup></a></li>
 		
 			<li><a href="/tags/事件代理/" title="事件代理">事件代理<sup>1</sup></a></li>
 		

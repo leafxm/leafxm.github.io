@@ -7,18 +7,15 @@
   <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
 <meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
   
-    <title>Leaf&#39;s blog</title>
+    <title>关于arguments和this | Leaf&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="leafxm">
     
-    <meta name="description" content="title: 关于arguments和thisdate: 2016-03-24tags:
-
-JavaScript
-this
-
-categories: [问题]
-问题1234567891011121314var length = 10;function fn()&amp;#123;	console.log(t">
+    <meta name="description" content="问题这个问题涉及到连等号的知识~
+1234var a=&amp;#123;n:1&amp;#125;var b = a;a.x = a =&amp;#123;n:2&amp;#125;;console.log(a.x);
+结果是 undefined。
+分析首先明确两点，一是等号会从左往右得到每个操作数的引用，二是连等号的结合性是从">
     
     
     
@@ -81,15 +78,15 @@ categories: [问题]
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/08/04/js_this_arg/" title="" itemprop="url"></a>
+      <a href="/2016/04/05/js_equal/" title="关于arguments和this" itemprop="url">关于arguments和this</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="leafxm">leafxm</a>
     </p>
   <p class="article-time">
-    <time datetime="2016-08-03T16:13:55.319Z" itemprop="datePublished">2016-08-04</time>
-    更新日期:<time datetime="2016-08-03T16:13:55.319Z" itemprop="dateModified">2016-08-04</time>
+    <time datetime="2016-04-04T16:00:00.000Z" itemprop="datePublished">2016-04-05</time>
+    更新日期:<time datetime="2016-08-03T16:51:10.528Z" itemprop="dateModified">2016-08-04</time>
     
   </p>
 </header>
@@ -101,27 +98,32 @@ categories: [问题]
 		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#u95EE_u9898"><span class="toc-number">1.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5206_u6790"><span class="toc-number">2.</span> <span class="toc-text">分析</span></a></li></ol>
 		</div>
 		
-		<p>title: 关于arguments和this<br>date: 2016-03-24<br>tags:</p>
-<ul>
-<li>JavaScript</li>
-<li>this</li>
-</ul>
-<p>categories: [问题]</p>
-<h2 id="u95EE_u9898"><a href="#u95EE_u9898" class="headerlink" title="问题"></a>问题</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> length = <span class="number">10</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>.length);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj=&#123;</span><br><span class="line">	length:<span class="number">5</span>,</span><br><span class="line">	method:<span class="function"><span class="keyword">function</span>(<span class="params">fn,a</span>)</span>&#123;</span><br><span class="line">		fn();</span><br><span class="line">		<span class="built_in">arguments</span>[<span class="number">0</span>]();</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="keyword">this</span>.length);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">obj.method(fn,<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-<p>这样的结果是10 2 5.</p>
-<h2 id="u5206_u6790"><a href="#u5206_u6790" class="headerlink" title="分析"></a>分析</h2><p>这道题目主要考察this的指向问题。<code>obj.method(fn,1)</code>执行时，首先执行fn()，这时候fn是直接执行的，this指向window,所以结果是10。</p>
-<p>然后执行<code>arguments[0]()</code>，arguments[0]和fn函数指向同一段内存空间，但是但是，这时候this就不那么单纯啦，此时相当于<code>fn.call(arguments)</code>,this指向了arguments类数组，它正好也有length属性，就是接收到的参数的个数了，这里接收到两个参数，所以就是2了~</p>
-<p>最后执行<code>console.log(this.length)</code>，这里的this指向obj对象，所以就是5啦，或者使用fn.call(this)也可达到同样效果啦~</p>
+		<h2 id="u95EE_u9898"><a href="#u95EE_u9898" class="headerlink" title="问题"></a>问题</h2><p>这个问题涉及到连等号的知识~</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a=&#123;n:<span class="number">1</span>&#125;</span><br><span class="line"><span class="keyword">var</span> b = a;</span><br><span class="line">a.x = a =&#123;n:<span class="number">2</span>&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(a.x);</span><br></pre></td></tr></table></figure>
+<p>结果是 undefined。</p>
+<h2 id="u5206_u6790"><a href="#u5206_u6790" class="headerlink" title="分析"></a>分析</h2><p>首先明确两点，一是等号会从左往右得到每个操作数的<strong>引用</strong>，二是连等号的结合性是从右往左。</p>
+<p>这样的结果就是首先a和b共同指向的内存空间会多出一个属性x,并且有一个暂时的引用默默记住这个内存位置，然后a指向了另一段空间{n:2},最后原来记住的那个内存位置也就是现在的b.x指向空间{n:2}。所以a就是{n:2}，a.x就是undefined啦，而此时b.x就指向{n:2}啦。</p>
+<p>如果去掉var b =a 结果一样，但是a原来指向的空间就会被回收了~</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/JavaScript/">JavaScript</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/问题/">问题</a>
+</div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2016/08/04/js_this_arg/" data-title="Leaf&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yoursite.com/2016/04/05/js_equal/" data-title="关于arguments和this | Leaf&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -131,18 +133,18 @@ categories: [问题]
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2016/08/04/js_equal/" title="">
+ <a href="/2016/04/08/js_this/" title="JavaScript 中的 this 到底指什么？">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  (no title)</span>
+  JavaScript 中的 this 到底指什么？</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2016/08/04/js_closure_loop/"  title="">
+<a href="/2016/03/24/js_this_arg/"  title="关于arguments和this">
  <strong>NEXT:</strong><br/> 
- <span>(no title)
+ <span>关于arguments和this
 </span>
 </a>
 </div>
@@ -152,7 +154,7 @@ categories: [问题]
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="" data-thread-key="js_this_arg" data-author-key="leafxm" data-url="http://yoursite.com/post/js_this_arg"></div>
+	<div class="ds-thread" data-title="关于arguments和this" data-thread-key="js_equal" data-author-key="leafxm" data-url="http://yoursite.com/post/js_equal"></div>
 	
 </section>
 
@@ -192,6 +194,8 @@ categories: [问题]
 		
 			<li><a href="/categories/教程/" title="教程">教程<sup>2</sup></a></li>
 		
+			<li><a href="/categories/问题/" title="问题">问题<sup>4</sup></a></li>
+		
 		</ul>
 </div>
 
@@ -205,13 +209,13 @@ categories: [问题]
 		
 			<li><a href="/tags/HTML/" title="HTML">HTML<sup>1</sup></a></li>
 		
-			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>7</sup></a></li>
+			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>11</sup></a></li>
 		
 			<li><a href="/tags/github/" title="github">github<sup>1</sup></a></li>
 		
 			<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
 		
-			<li><a href="/tags/this/" title="this">this<sup>1</sup></a></li>
+			<li><a href="/tags/this/" title="this">this<sup>2</sup></a></li>
 		
 			<li><a href="/tags/事件代理/" title="事件代理">事件代理<sup>1</sup></a></li>
 		
