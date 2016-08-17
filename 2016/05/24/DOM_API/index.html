@@ -1,0 +1,521 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>DOM常用API小结 | Leaf&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="leafxm">
+    
+    <meta name="description" content="基本概念
+node类型：Element类型、Text类型、Attr类型、comment类型、document类型、documentFragment类型 
+属性NodeType用一个整数表示节点类型，如：元素element    1、属性attr    2、文本text    3、注释comments">
+    
+    
+    
+    
+    <link rel="alternate" href="atom.xml" title="Leaf&#39;s blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='yxm0530';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Leaf&#39;s blog">Leaf&#39;s blog</a></h1>
+				<a class="blog-motto"></a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+					<li>
+					
+						<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" class="st-default-search-input" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/05/24/DOM_API/" title="DOM常用API小结" itemprop="url">DOM常用API小结</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yoursite.com" title="leafxm">leafxm</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-05-23T16:00:00.000Z" itemprop="datePublished">2016-05-24</time>
+    更新日期:<time datetime="2016-08-17T14:03:05.119Z" itemprop="dateModified">2016-08-17</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#u57FA_u672C_u6982_u5FF5"><span class="toc-number">1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u8282_u70B9_u521B_u5EFA_u578Bapi"><span class="toc-number">2.</span> <span class="toc-text">节点创建型api</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u9875_u9762_u4FEE_u6539_u578BAPI"><span class="toc-number">3.</span> <span class="toc-text">页面修改型API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u8282_u70B9_u67E5_u8BE2_u578BAPI"><span class="toc-number">4.</span> <span class="toc-text">节点查询型API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u8282_u70B9_u5173_u7CFB_u578Bapi"><span class="toc-number">5.</span> <span class="toc-text">节点关系型api</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u7236_u5173_u7CFB"><span class="toc-number">5.1.</span> <span class="toc-text">父关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u5144_u5F1F_u5173_u7CFB"><span class="toc-number">5.2.</span> <span class="toc-text">兄弟关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u5B50_u5173_u7CFB"><span class="toc-number">5.3.</span> <span class="toc-text">子关系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5143_u7D20_u5C5E_u6027_u578Bapi"><span class="toc-number">6.</span> <span class="toc-text">元素属性型api</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5143_u7D20_u6837_u5F0F_u578Bapi"><span class="toc-number">7.</span> <span class="toc-text">元素样式型api</span></a></li></ol>
+		</div>
+		
+		<h2 id="u57FA_u672C_u6982_u5FF5"><a href="#u57FA_u672C_u6982_u5FF5" class="headerlink" title="基本概念"></a>基本概念</h2><ol>
+<li>node类型：Element类型、Text类型、Attr类型、comment类型、document类型、documentFragment类型 </li>
+<li>属性NodeType用一个整数表示节点类型，如：元素element    1、属性attr    2、文本text    3、注释comments    8、文档document    9</li>
+</ol>
+<h2 id="u8282_u70B9_u521B_u5EFA_u578Bapi"><a href="#u8282_u70B9_u521B_u5EFA_u578Bapi" class="headerlink" title="节点创建型api"></a>节点创建型api</h2><ol>
+<li>createElement</li>
+<li>createTextNode</li>
+<li>parent.cloneNode（true）true表示复制子节点</li>
+<li>createDocumentFragment 用于添加大量节点到文档，防止回流造成的性能问题</li>
+</ol>
+<p>只是创建，并没有添加到文档中，需要通过页面修改型API来加入节点</p>
+<h2 id="u9875_u9762_u4FEE_u6539_u578BAPI"><a href="#u9875_u9762_u4FEE_u6539_u578BAPI" class="headerlink" title="页面修改型API"></a>页面修改型API</h2><ol>
+<li>parent.appendChild(child) </li>
+<li>parentNode.insertBefore(newNode,refNode);<br>参考元素要是父元素的子元素</li>
+<li>parent.removeChlid(node); 返回被删除的节点</li>
+<li>parent.replaceChild(newChild,oldChild)</li>
+</ol>
+<p>不管是新增还是替换节点，如果新增或替换的节点是原本存在页面上的，则其原来位置的节点将被移除，也就是说同一个节点不能存在于页面的多个位置。</p>
+<h2 id="u8282_u70B9_u67E5_u8BE2_u578BAPI"><a href="#u8282_u70B9_u67E5_u8BE2_u578BAPI" class="headerlink" title="节点查询型API"></a>节点查询型API</h2><ol>
+<li>document.getElementById id大小写敏感</li>
+<li>document.getElementsByTagName<br>返回即时的HTMLCollection类型(结果会随文档树变化而变化)</li>
+<li>document.getElementsByName<br>返回即时的NodeList对象</li>
+<li>document.getElementsByClassName<br>返回即时的HTMLCollection类型，IE9以下浏览器不支持，可用空格相隔获取多个classname</li>
+<li>document.querySelector 和 document.querySelectorAll<br>都是使用深度优先来获取元素，第一个返回第一个匹配的元素，第二个返回所有匹配元素，返回的是一个非即时的NodeList，ie8以下的浏览器不支持</li>
+</ol>
+<h2 id="u8282_u70B9_u5173_u7CFB_u578Bapi"><a href="#u8282_u70B9_u5173_u7CFB_u578Bapi" class="headerlink" title="节点关系型api"></a>节点关系型api</h2><h3 id="u7236_u5173_u7CFB"><a href="#u7236_u5173_u7CFB" class="headerlink" title="父关系"></a>父关系</h3><ol>
+<li>parentNode </li>
+<li>parentElement</li>
+</ol>
+<h3 id="u5144_u5F1F_u5173_u7CFB"><a href="#u5144_u5F1F_u5173_u7CFB" class="headerlink" title="兄弟关系"></a>兄弟关系</h3><ol>
+<li>previousSibling </li>
+<li>previousElementSibling IE9以下不支持</li>
+<li>nextSibling</li>
+<li>nextElementSibling IE9以下不支持</li>
+</ol>
+<h3 id="u5B50_u5173_u7CFB"><a href="#u5B50_u5173_u7CFB" class="headerlink" title="子关系"></a>子关系</h3><ol>
+<li>childNodes:返回即时NodeList</li>
+<li>chidren:返回即时HTMLCollection，子元素都是element，IE9以下不支持</li>
+<li>firstNode </li>
+<li>lastNode</li>
+<li>hasChildNodes方法：判断是否包含子节点</li>
+</ol>
+<h2 id="u5143_u7D20_u5C5E_u6027_u578Bapi"><a href="#u5143_u7D20_u5C5E_u6027_u578Bapi" class="headerlink" title="元素属性型api"></a>元素属性型api</h2><ol>
+<li>element.setAttribute(name,value)</li>
+<li>element.getAttribute(name)</li>
+</ol>
+<h2 id="u5143_u7D20_u6837_u5F0F_u578Bapi"><a href="#u5143_u7D20_u6837_u5F0F_u578Bapi" class="headerlink" title="元素样式型api"></a>元素样式型api</h2><ol>
+<li>window.getComputedStyle(element[, pseudoElt])<br>window.getComputedStyle是用来获取应用到元素后的样式，假设某个元素并未设置高度而是通过其内容将其高度撑开，这时候要获取它的高度就要用到getComputedStyle</li>
+<li>element.getBoundingClientRect();<br>返回元素的大小以及相对于浏览器可视窗口的位置</li>
+</ol>
+<p>具体请见 <a href="http://luopq.com/2015/11/30/javascript-dom/" target="_blank" rel="external">http://luopq.com/2015/11/30/javascript-dom/</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/DOM/">DOM</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/DOM/">DOM</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yoursite.com/2016/05/24/DOM_API/" data-title="DOM常用API小结 | Leaf&#39;s blog" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/06/10/位置总结/" title="DOM和事件中各种位置的总结">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  DOM和事件中各种位置的总结</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/05/08/垂直居中/"  title="水平、垂直居中的方法总结">
+ <strong>NEXT:</strong><br/> 
+ <span>水平、垂直居中的方法总结
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="DOM常用API小结" data-thread-key="DOM_API" data-author-key="leafxm" data-url="http://yoursite.com/post/DOM_API"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#u57FA_u672C_u6982_u5FF5"><span class="toc-number">1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u8282_u70B9_u521B_u5EFA_u578Bapi"><span class="toc-number">2.</span> <span class="toc-text">节点创建型api</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u9875_u9762_u4FEE_u6539_u578BAPI"><span class="toc-number">3.</span> <span class="toc-text">页面修改型API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u8282_u70B9_u67E5_u8BE2_u578BAPI"><span class="toc-number">4.</span> <span class="toc-text">节点查询型API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u8282_u70B9_u5173_u7CFB_u578Bapi"><span class="toc-number">5.</span> <span class="toc-text">节点关系型api</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u7236_u5173_u7CFB"><span class="toc-number">5.1.</span> <span class="toc-text">父关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u5144_u5F1F_u5173_u7CFB"><span class="toc-number">5.2.</span> <span class="toc-text">兄弟关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u5B50_u5173_u7CFB"><span class="toc-number">5.3.</span> <span class="toc-text">子关系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5143_u7D20_u5C5E_u6027_u578Bapi"><span class="toc-number">6.</span> <span class="toc-text">元素属性型api</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5143_u7D20_u6837_u5F0F_u578Bapi"><span class="toc-number">7.</span> <span class="toc-text">元素样式型api</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo" ></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		
+		
+		<a href="https://github.com/leafxm" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/DOM/" title="DOM">DOM<sup>2</sup></a></li>
+		
+			<li><a href="/categories/css/" title="css">css<sup>1</sup></a></li>
+		
+			<li><a href="/categories/node-js/" title="node.js">node.js<sup>1</sup></a></li>
+		
+			<li><a href="/categories/总结/" title="总结">总结<sup>8</sup></a></li>
+		
+			<li><a href="/categories/教程/" title="教程">教程<sup>2</sup></a></li>
+		
+			<li><a href="/categories/问题/" title="问题">问题<sup>4</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/express/" title="-express">-express<sup>0</sup></a></li>
+		
+			<li><a href="/tags/CSS/" title="CSS">CSS<sup>2</sup></a></li>
+		
+			<li><a href="/tags/DOM/" title="DOM">DOM<sup>2</sup></a></li>
+		
+			<li><a href="/tags/HTML/" title="HTML">HTML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>11</sup></a></li>
+		
+			<li><a href="/tags/css3/" title="css3">css3<sup>1</sup></a></li>
+		
+			<li><a href="/tags/express/" title="express">express<sup>1</sup></a></li>
+		
+			<li><a href="/tags/github/" title="github">github<sup>1</sup></a></li>
+		
+			<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+		
+			<li><a href="/tags/this/" title="this">this<sup>2</sup></a></li>
+		
+			<li><a href="/tags/事件代理/" title="事件代理">事件代理<sup>1</sup></a></li>
+		
+			<li><a href="/tags/位置/" title="位置">位置<sup>1</sup></a></li>
+		
+			<li><a href="/tags/兼容/" title="兼容">兼容<sup>1</sup></a></li>
+		
+			<li><a href="/tags/变量提升/" title="变量提升">变量提升<sup>1</sup></a></li>
+		
+			<li><a href="/tags/垂直居中/" title="垂直居中">垂直居中<sup>1</sup></a></li>
+		
+			<li><a href="/tags/基础知识/" title="基础知识">基础知识<sup>1</sup></a></li>
+		
+			<li><a href="/tags/百度地图/" title="百度地图">百度地图<sup>1</sup></a></li>
+		
+			<li><a href="/tags/读书笔记/" title="读书笔记">读书笔记<sup>1</sup></a></li>
+		
+			<li><a href="/tags/闭包/" title="闭包">闭包<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2016 
+		
+		<a href="http://yoursite.com" target="_blank" title="leafxm">leafxm</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+		<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+  
+  _st('install','VJyggzynWWh5kw3F7Gzq','2.0.0');
+</script>
+	    </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"null"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '4';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+
+  </body>
+</html>
+
