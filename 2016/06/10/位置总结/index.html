@@ -84,7 +84,7 @@
     </p>
   <p class="article-time">
     <time datetime="2016-06-09T16:00:00.000Z" itemprop="datePublished">2016-06-10</time>
-    更新日期:<time datetime="2016-08-17T13:56:59.032Z" itemprop="dateModified">2016-08-17</time>
+    更新日期:<time datetime="2016-09-10T14:21:36.122Z" itemprop="dateModified">2016-09-10</time>
     
   </p>
 </header>
@@ -105,7 +105,7 @@
 <h3 id="getBoundingClientRect_28_29"><a href="#getBoundingClientRect_28_29" class="headerlink" title="getBoundingClientRect()"></a>getBoundingClientRect()</h3><p>得到矩形元素相对于文档视图左上角的top,right,bottom,left属性。</p>
 <h3 id="getClientRects_28_29"><a href="#getClientRects_28_29" class="headerlink" title="getClientRects()"></a>getClientRects()</h3><p>返回元素的数个矩形区域，返回的结果是个对象列表，具有数组特性。这里的矩形选区只针对inline box，因此，只针对a, span, em这类标签元素。换行算不同区域。</p>
 <h3 id="scrollIntoView_28_29"><a href="#scrollIntoView_28_29" class="headerlink" title="scrollIntoView()"></a>scrollIntoView()</h3><p>让元素滚动到可视区域。</p>
-<h3 id="clientLeft_u548CclientTop_uFF0CclientWidth_u548CclientHeight"><a href="#clientLeft_u548CclientTop_uFF0CclientWidth_u548CclientHeight" class="headerlink" title="clientLeft和clientTop，clientWidth和clientHeight"></a>clientLeft和clientTop，clientWidth和clientHeight</h3><p>clientLeft/Top表示内容区域左上角相对于整个元素左上角的位置（就是边框大小)。</p>
+<h3 id="clientLeft_u548CclientTop_uFF0CclientWidth_u548CclientHeight"><a href="#clientLeft_u548CclientTop_uFF0CclientWidth_u548CclientHeight" class="headerlink" title="clientLeft和clientTop，clientWidth和clientHeight"></a>clientLeft和clientTop，clientWidth和clientHeight</h3><p>clientLeft/Top表示paddingbox左上角相对于整个元素左上角的位置（就是边框大小)。</p>
 <p>clientWidth/Height就是内容区域的高度和宽度，包括padding大小，但是不包括边框和滚动条。如下图：</p>
 <p><img src="http://7xqrzp.com1.z0.glb.clouddn.com/client.png" alt="client"></p>
 <h3 id="offsetLeft_u548CoffsetTop_uFF0CoffsetParent_uFF0CoffsetWidth_u548CoffsetHeight"><a href="#offsetLeft_u548CoffsetTop_uFF0CoffsetParent_uFF0CoffsetWidth_u548CoffsetHeight" class="headerlink" title="offsetLeft和offsetTop，offsetParent，offsetWidth和offsetHeight"></a>offsetLeft和offsetTop，offsetParent，offsetWidth和offsetHeight</h3><p>offsetLeft/Top表示相对于最近的祖先定位元素的偏移值。</p>
@@ -115,7 +115,7 @@
 <h3 id="scrollLeft_u548CscrollTop_uFF0CscrollWidth_u548CscrollHeight"><a href="#scrollLeft_u548CscrollTop_uFF0CscrollWidth_u548CscrollHeight" class="headerlink" title="scrollLeft和scrollTop，scrollWidth和scrollHeight"></a>scrollLeft和scrollTop，scrollWidth和scrollHeight</h3><p>scrollLeft和scrollTop表示元素滚动的像素大小,可读可写。</p>
 <p>scrollWidth和scrollHeight表示包含滚动隐藏区域的整个内容区域的大小。如下图：</p>
 <p><img src="http://7xqrzp.com1.z0.glb.clouddn.com/scroll.png" alt="scroll"></p>
-<p>如果要判断一个元素滚动到最底端，可以比较 scrollTop 是否等于(offsetHeight – clientHeight).</p>
+<p>如果要判断一个元素滚动到最底端，可以比较 scrollTop 是否等于(scrollHeight – clientHeight).</p>
 <h2 id="u9F20_u6807_u4F4D_u7F6E"><a href="#u9F20_u6807_u4F4D_u7F6E" class="headerlink" title="鼠标位置"></a>鼠标位置</h2><h3 id="clientX_2CclientY"><a href="#clientX_2CclientY" class="headerlink" title="clientX,clientY"></a>clientX,clientY</h3><p>鼠标相对于视口的偏移。</p>
 <h3 id="offsetX_2C_offsetY"><a href="#offsetX_2C_offsetY" class="headerlink" title="offsetX, offsetY"></a>offsetX, offsetY</h3><p>表示鼠标相对于当前被点击元素padding box的左上偏移值。</p>
 <h3 id="pageX_2C_pageY"><a href="#pageX_2C_pageY" class="headerlink" title="pageX, pageY"></a>pageX, pageY</h3><p>为鼠标相对于document（页面）的坐标。IE6~IE8浏览器是不支持。</p>
